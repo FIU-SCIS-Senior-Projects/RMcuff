@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">RMCuff.V1</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="sendMessage">SEND MESSAGES</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
