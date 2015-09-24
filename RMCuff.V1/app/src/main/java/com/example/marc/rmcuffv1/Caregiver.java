@@ -1,46 +1,51 @@
 package com.example.marc.rmcuffv1;
-
+import java.io.Serializable;
 /**
  * Created by Davidb on 9/11/15.
  */
-public class Caregiver
+public class Caregiver implements Serializable
 {
-    private String name ;
-    private String phoneNum ;
-    private boolean notify ;
+    private String firstName = "" ;
+    private String lastName = "" ;
+    private String phoneNum = "" ;
+    private String emailAddress = "" ;
+    private int userID = -1 ;
+    private int contactPreference = 1;
+    private boolean notify = false ;
 
-    public Caregiver(String name, String phoneNum, boolean notify)
+    public Caregiver()
     {
-        this.name = name ;
+
+    }
+    public Caregiver(String firstName, String lastName, String phoneNum, String emailAddress)
+    {
+        this.firstName = firstName ;
+        this.lastName = lastName ;
         this.phoneNum = phoneNum ;
-        this.notify = notify ;
+        this.emailAddress = emailAddress ;
     }
 
     // Get methods
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPhoneNum() {
-        return phoneNum;
-    }
-
-    public boolean getNotify() {
-        return notify;
-    }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public String getPhoneNum() { return phoneNum; }
+    public String getEmailAddress()  { return emailAddress; }
+    public int getUserID()  { return userID; }
+    public int getContactPreference()  { return contactPreference; }
+    public boolean getNotify() { return notify; }
 
     // Set methods
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public void setPhoneNum(String phoneNum) { this.phoneNum = phoneNum; }
+    public void setEmailAddress(String emailAddress) { this.emailAddress = emailAddress; }
+    public void setUserID(int userID) { this.userID = userID; }
+    public void setContactPreference(int contactPreference) { this.contactPreference = contactPreference; }
+    public void setNotify(boolean notify) { this.notify = notify; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
-
-    public void setNotify(boolean notify) {
-        this.notify = notify;
+    @Override
+    public String toString() {
+        return "[CAREGIVER]: " + firstName + " : " + lastName + " : " + phoneNum + " : " + emailAddress + " : " + userID
+                + " : " + contactPreference + " : " + notify;
     }
 }
