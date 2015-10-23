@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.marc.rmcuffv1"
-        minSdkVersion 10
+        minSdkVersion 11
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -24,4 +24,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile files('libs/gson-2.3.1.jar')
     compile project(':gson-2.3.1')
+    compile 'com.pushbots:pushbots-lib:2.0.13@aar'
+    compile 'com.android.support:support-v4:22.0.0'
 }

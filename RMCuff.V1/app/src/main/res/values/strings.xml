@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RMCuff</string>
+    <string name="app_name">RMCuff Care</string>
 
     <string name="firstName">First Name:</string>
     <string name="lastName">Last Name:</string>
@@ -7,8 +7,8 @@
     <string name="phoneNumber">Phone Number:</string>
     <string name="addCaregiver">ADD</string>
     <string name="sendMessages">SEND MESSAGES</string>
-    <string name="caregivers">CAREGIVERS</string>
-    <string name="newCaregivers">New Cargivers</string>
+    <string name="caregivers">Secondary Caregivers</string>
+    <string name="newCaregivers">Add New Caregiver</string>
 
     <string name="patientName">Patient Name:</string>
     <string name="savePatient">Save</string>
@@ -37,4 +37,7 @@
     <string name="weekButtonSunday">SUNDAY</string>
     <string name="automaticRadioButtonText">Automatic</string>
     <string name="manualRadioButtonText">Manual</string>
+    <string name="title_activity_new_schedule_page">NewSchedulePage</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

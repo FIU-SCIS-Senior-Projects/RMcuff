@@ -5,6 +5,7 @@ package com.example.marc.rmcuffv1;
  */
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,9 @@ public class CustomArrayAdapter extends BaseAdapter {
             holder.txtEmailAddress.setText(searchArrayList.get(position).getEmailAddress());
             holder.txtPhoneNumber.setText(searchArrayList.get(position).getPhoneNum());
             holder.chkSelected.setChecked(searchArrayList.get(position).getNotify());
+
+            holder.txtFirstName.setTypeface(null, Typeface.BOLD);
+            holder.txtLastName.setTypeface(null, Typeface.BOLD);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }

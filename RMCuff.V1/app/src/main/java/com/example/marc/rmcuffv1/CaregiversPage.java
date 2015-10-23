@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -41,6 +43,35 @@ public class CaregiversPage extends Activity {
 
         registerForContextMenu(caregiverListView);
         populateList();
+    }
+
+    public void sendTextMessage(View view) {
+        sendTextMessage();
+    }
+
+    private void sendTextMessage() {
+
+        String message = "Patient: Dustin M\n109/68 @ 15:15 08/25\n102/69 @ 20:15 08/24\n100/70 @ 17:12 08/23\n..." ;
+        SmsManager msgManager = SmsManager.getDefault() ;
+
+        // NEW
+        try {
+            ArrayList<Caregiver> caregiverResults = GetSearchResultsFromPreferences();
+
+            if (!caregiverResults.isEmpty()) {
+                for (Caregiver cg : caregiverResults) {
+                    if (cg.getNotify()) // if the notify box is checked
+                    {
+                        msgManager.sendTextMessage(cg.getPhoneNum(), null, message, null, null);
+                    }
+                }
+                System.out.println("Message Sent!") ;
+            } else {
+                System.out.println("CaregiverList is empty..") ;
+            }
+        } catch (NullPointerException e) {
+            Log.d(LOG_TAG, "EMPTY LIST");
+        }
     }
 
     @Override

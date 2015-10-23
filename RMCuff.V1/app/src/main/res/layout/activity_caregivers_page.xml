@@ -1,24 +1,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
     android:descendantFocusability="blocksDescendants" >
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:padding="10dp"
         android:id="@+id/caregiverListView"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/button" />
+        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/newCaregivers"
-        android:id="@+id/button"
+        android:id="@+id/caregiversButtonSection"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="addCaregiver" />
+        android:padding="10dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/newCaregivers"
+            android:id="@+id/addCaregiverButton"
+            android:onClick="addCaregiver"
+            android:background="@color/large_button"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/addCaregiverButton"
+            android:layout_marginTop="10pt"
+            android:text="Send Text Report"
+            android:id="@+id/sendMessageButton"
+            android:onClick="sendTextMessage"
+            android:background="@color/large_button"/>
+
+    </RelativeLayout>
 </RelativeLayout>

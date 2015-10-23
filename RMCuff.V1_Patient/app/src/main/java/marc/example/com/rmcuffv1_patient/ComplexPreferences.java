@@ -1,7 +1,7 @@
-package com.example.marc.rmcuffv1;
+package marc.example.com.rmcuffv1_patient;
 
 /**
- * Created by Davidb on 9/23/15.
+ * Created by Davidb on 10/12/15.
  */
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class ComplexPreferences {
 
@@ -75,6 +76,8 @@ public class ComplexPreferences {
         }
     }
 
+
+    /*
     public void removeObject(String key) {
         if (key.equals("") || key == null) {
             throw new IllegalArgumentException("Key is empty or null");
@@ -85,7 +88,9 @@ public class ComplexPreferences {
         commit();
         Log.d(LOG_TAG, "REMOVING: " + key);
     }
+    */
 
+    /*
     private void recalculateCaregivers(int position) {
         int count = getCount();
 
@@ -95,6 +100,7 @@ public class ComplexPreferences {
             putObject(String.valueOf(position), c);
         }
     }
+    */
 
     public void setCount(int value) {
         editor.putInt("userCount", value).commit();

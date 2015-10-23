@@ -1,40 +1,145 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:onClick="openSettingsPage">
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:background="@color/background_color">
+
+    <TextView android:text="Hello Patient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pcgNameField"
+        android:textStyle="bold"
+        android:padding="10dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/patientInfo"
+        android:layout_below="@+id/pcgNameField"
+        android:layout_marginTop="5pt"
+        android:padding="10dp"
+        android:background="@color/box_color">
+
+        <TextView android:text="Patient Info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/patientInfoTitle"
+            android:textStyle="bold"
+            android:textColor="@color/title_text"/>
+
+        <TextView android:text="Patient Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/patientNameField"
+            android:layout_below="@+id/patientInfoTitle"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Call"
+            android:layout_alignParentRight="true"
+            android:id="@+id/callButton"
+            android:onClick="makeCall" />
+
+        <TextView android:text="Patient PhoneNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2pt"
+            android:layout_below="@+id/patientNameField"
+            android:id="@+id/patientPhoneField"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonSection"
+        android:layout_below="@+id/patientInfo"
+        android:layout_marginTop="5pt"
+        android:padding="10dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/caregivers"
+            android:id="@+id/caregiversButton"
+            android:onClick="startCaregivers"
+            android:background="@color/large_button"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Schedule a Reading"
+            android:id="@+id/newScheduleButton"
+            android:onClick="setNewSchedule"
+            android:layout_below="@+id/caregiversButton"
+            android:background="@color/large_button"
+            android:layout_marginTop="10pt"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/quickGlance"
+        android:layout_below="@+id/buttonSection"
+        android:layout_marginTop="5pt"
+        android:background="@color/box_color">
+
+        <TextView android:text="Quick Glance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/quickGlanceTitle"
+            android:textStyle="bold"
+            android:layout_marginBottom="2pt"
+            android:textColor="@color/title_text"/>
+
+        <TextView android:text="Next Reading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/scheduleListTitle"
+            android:layout_below="@+id/quickGlanceTitle"
+            android:textStyle="bold"
+            android:textColor="@color/subtitle_text"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/scheduleListTitle"
+            android:layout_marginTop="0pt"
+            android:id="@+id/scheduleInfoList">
+        </ListView>
+
+        <TextView android:text="Past Readings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/readingsListTitle"
+            android:layout_below="@+id/scheduleInfoList"
+            android:textStyle="bold"
+            android:textColor="@color/subtitle_text"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/readingsListTitle"
+            android:layout_marginTop="2pt"
+            android:id="@+id/readingsInfoList">
+        </ListView>
+
+    </RelativeLayout>
 
     <TextView
         android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/quickGlance"
         android:id="@+id/edit"
         android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:padding="10dp"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sendMessages"
-        android:id="@+id/SendReadingsButton"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="sendTextMessage"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/caregivers"
-        android:id="@+id/caregiversButton"
-        android:layout_above="@+id/SendReadingsButton"
-        android:layout_alignRight="@+id/SendReadingsButton"
-        android:layout_alignEnd="@+id/SendReadingsButton"
-        android:layout_alignLeft="@+id/SendReadingsButton"
-        android:layout_alignStart="@+id/SendReadingsButton"
-        android:onClick="startCaregivers" />
 
 
 </RelativeLayout>

@@ -7,12 +7,12 @@ import java.util.Date;
  */
 public class Reading
 {
-    private double systolic ;
-    private double diastolic ;
+    private int systolic ;
+    private int diastolic ;
     private String readingRating ;
     private Date date ;
 
-    public Reading(double systolic, double diastolic, Date date)
+    public Reading(int systolic, int diastolic, Date date)
     {
         this.systolic = systolic ;
         this.diastolic = diastolic ;
@@ -38,11 +38,11 @@ public class Reading
     }
 
     // Get Methods
-    public double getSystolic() {
+    public int getSystolic() {
         return systolic;
     }
 
-    public double getDiastolic() {
+    public int getDiastolic() {
         return diastolic;
     }
     public String getReadingRating() {
@@ -55,11 +55,11 @@ public class Reading
 
     // Set methods
 
-    public void setSystolic(double systolic) {
+    public void setSystolic(int systolic) {
         this.systolic = systolic;
     }
 
-    public void setDiastolic(double diastolic) {
+    public void setDiastolic(int diastolic) {
         this.diastolic = diastolic;
     }
 

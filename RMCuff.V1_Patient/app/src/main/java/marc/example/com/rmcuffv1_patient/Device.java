@@ -35,7 +35,7 @@ public class Device
             Date date = new Date();
 
             System.out.println(dateFormat.format(date));
-            Reading reading = new Reading(89.1, 30.2, date);
+            Reading reading = new Reading(120, 80, date);
             return reading;
         }
 
