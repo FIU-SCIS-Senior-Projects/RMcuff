@@ -1,5 +1,7 @@
 package com.example.marc.rmcuffv1;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -34,7 +36,10 @@ public class Reading
     }
     public String toString()
     {
-        return getSystolic() + "/" + getDiastolic() + " @ " + getDate() ;
+        SimpleDateFormat df = new SimpleDateFormat("hh:mm a  MM/dd/yy");
+        String theDate = df.format(getDate()) ;
+
+        return String.format(getSystolic() + "/" + getDiastolic() + " @ " + theDate ) ;
     }
 
     // Get Methods

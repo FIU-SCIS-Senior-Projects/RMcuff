@@ -130,14 +130,16 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:text=""
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Clear Data (testing)"
+        android:id="@+id/testButton"
+        android:onClick="clearAllData"
         android:layout_below="@+id/quickGlance"
-        android:id="@+id/edit"
-        android:layout_alignParentBottom="true"
-        android:padding="10dp"/>
+        android:layout_marginTop="5pt"/>
+
+
 
 
 

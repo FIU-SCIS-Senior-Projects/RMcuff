@@ -75,17 +75,18 @@ public class ComplexPreferences {
         }
     }
 
+
     public void removeObject(String key) {
         if (key.equals("") || key == null) {
             throw new IllegalArgumentException("Key is empty or null");
         }
         editor.remove(key);
-        recalculateCaregivers(Integer.parseInt(key));
-        setCount(getCount() - 1);
+        //recalculateCaregivers(Integer.parseInt(key));
+        //setCount(getCount() - 1);
         commit();
         Log.d(LOG_TAG, "REMOVING: " + key);
     }
-
+/*
     private void recalculateCaregivers(int position) {
         int count = getCount();
 
@@ -96,6 +97,7 @@ public class ComplexPreferences {
         }
     }
 
+
     public void setCount(int value) {
         editor.putInt("userCount", value).commit();
     }
@@ -103,6 +105,7 @@ public class ComplexPreferences {
     public int getCount() {
         return preferences.getInt("userCount", 0);
     }
+    */
 
     public void wipePreferences(Context context, String fileName) {
         SharedPreferences wipePreferences = context.getSharedPreferences(fileName, 0);

@@ -23,8 +23,12 @@ import java.util.HashMap;
 public class CustomHandler extends BroadcastReceiver
 {
     private static final String TAG = "customHandler";
-    private ObjectPreference readingObjectPreference;
-    private ComplexPreferences readingComplexPreferences;
+
+    private ObjectPreference objectPreference;
+    private ComplexPreferences complexPreferences;
+
+    //private ObjectPreference readingObjectPreference;
+    //private ComplexPreferences readingComplexPreferences;
     private ReadingList readingList ;
     private Gson GSON = new Gson();
 
@@ -33,15 +37,15 @@ public class CustomHandler extends BroadcastReceiver
     {
 
         String action = intent.getAction();
-        readingObjectPreference = (ObjectPreference) context.getApplicationContext() ;
-        readingObjectPreference.createNewComplexFile("reading");
-        readingComplexPreferences = readingObjectPreference.getComplexPreference();
+        objectPreference = (ObjectPreference) context.getApplicationContext() ;
+        objectPreference.createNewComplexFile("data");
+        complexPreferences = objectPreference.getComplexPreference();
 
         System.out.println("XXX WORKS") ;
 
-        if( readingComplexPreferences != null) {
+        if( complexPreferences != null) {
             System.out.println("XXX2 WORKS2NEW") ;
-            readingList = readingComplexPreferences.getObject("readingList", ReadingList.class) ;
+            readingList = complexPreferences.getObject("readingList", ReadingList.class) ;
         }
 
         Log.d(TAG, "action=" + action);
@@ -102,8 +106,8 @@ public class CustomHandler extends BroadcastReceiver
                 System.out.println(readingList.get(0).getDate()) ;
 
                 // UNCOMMENT THIS ONCE YOU WANT TO START SAVING
-                readingComplexPreferences.putObject("readingList", readingList);
-                readingComplexPreferences.commit();
+                complexPreferences.putObject("readingList", readingList);
+                complexPreferences.commit();
                 System.out.println("XXX3 WORKS3") ;
             }
         }

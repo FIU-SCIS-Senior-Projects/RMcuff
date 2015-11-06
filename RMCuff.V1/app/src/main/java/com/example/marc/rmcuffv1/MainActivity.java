@@ -32,17 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private PrimaryCaregiver pcg ;
     private Intent caregiversPage;
 
-    private ObjectPreference pcgObjectPreference;
-    private ComplexPreferences pcgComplexPreferences;
-
-    private ObjectPreference secCaregiverObjectPreference;
-    private ComplexPreferences secCaregiverComplexPreferences;
-
-    private ObjectPreference scheduleObjectPreference;
-    private ComplexPreferences scheduleComplexPreferences;
-
-    private ObjectPreference readingObjectPreference;
-    private ComplexPreferences readingComplexPreferences;
+    private ObjectPreference objectPreference;
+    private ComplexPreferences complexPreferences;
 
     private Gson GSON = new Gson();
 
@@ -52,65 +43,78 @@ public class MainActivity extends AppCompatActivity {
         this.setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
-        //Pushbots.sharedInstance().init(this);
-        //Pushbots.sharedInstance().setCustomHandler(CustomHandler.class);
+        Pushbots.sharedInstance().init(this);
+        Pushbots.sharedInstance().setCustomHandler(CustomHandler.class);
 
         // Get all Object preferences
-        secCaregiverObjectPreference = pcgObjectPreference = scheduleObjectPreference =  readingObjectPreference = (ObjectPreference) this.getApplication();
+        objectPreference =  (ObjectPreference) this.getApplication() ;
+        objectPreference.createNewComplexFile("data") ;
 
-        secCaregiverObjectPreference.createNewComplexFile("caregivers");
-        pcgObjectPreference.createNewComplexFile("primaryCaregiver") ;
-        scheduleObjectPreference.createNewComplexFile("schedule");
-        readingObjectPreference.createNewComplexFile("reading");
+        complexPreferences = objectPreference.getComplexPreference() ;
 
-        secCaregiverComplexPreferences = secCaregiverObjectPreference.getComplexPreference();
-        pcgComplexPreferences = pcgObjectPreference.getComplexPreference() ;
-        scheduleComplexPreferences = scheduleObjectPreference.getComplexPreference();
-        readingComplexPreferences = readingObjectPreference.getComplexPreference();
-
-        //readingComplexPreferences.removeObject("readingList");
-        //readingComplexPreferences.commit();
-
-        System.out.println("secCG^^^^^^^\n" + secCaregiverComplexPreferences.getAll()) ;
-        System.out.println("PCG^^^^^^^\n" + pcgComplexPreferences.getAll()) ;
-        System.out.println("Sced^^^^^^^\n" + scheduleComplexPreferences.getAll()) ;
-        System.out.println("Read^^^^^^^\n" + readingComplexPreferences.getAll()) ;
-        // Load dynamically When functionality ready
-
-        //pcgComplexPreferences.removeObject("pcg") ;
-        ArrayList<Caregiver> caregiverResults = GetSearchResultsFromPreferences() ;
+        CaregiverList caregiverResults = null ;
         ReadingList readings = null;
-        if( readingComplexPreferences != null )
+
+        if( complexPreferences != null )
         {
             //readingComplexPreferences.putObject("readingList", new ReadingList());
             //readingComplexPreferences.commit() ;
+
             System.out.println("XXX5 WORKS5") ;
-            readings = readingComplexPreferences.getObject("readingList", ReadingList.class ) ;
+            caregiverResults = complexPreferences.getObject("caregiverList", CaregiverList.class) ;
+            readings = complexPreferences.getObject("readingList", ReadingList.class ) ;
         }
 
         if( readings == null)
             readings = new ReadingList() ;
 
-
+        if (caregiverResults == null)
+            caregiverResults = new CaregiverList() ;
 
 
         MyPatient patient = new MyPatient("7864445555", "Luke Skywalkwer", new Date(), readings, new Schedule()) ;
         pcg = new PrimaryCaregiver("7863158886", patient, caregiverResults) ;
 
-        if (pcgComplexPreferences != null)
+        if (complexPreferences != null)
         {
             System.out.println("$$$$$$*********\n");
-            pcgComplexPreferences.putObject("pcg", pcg);
-            pcgComplexPreferences.commit();
+            complexPreferences.putObject("pcg", pcg);
+            complexPreferences.commit();
         }
 
 
         //Dynamic Load
-        pcg = pcgComplexPreferences.getObject("pcg", PrimaryCaregiver.class) ;
+        pcg = complexPreferences.getObject("pcg", PrimaryCaregiver.class) ;
 
-        //Pushbots.sharedInstance().setAlias(pcg.getPrimaryCaregiverID()) ;
+        Pushbots.sharedInstance().setAlias(pcg.getPrimaryCaregiverID()) ;
 
         // Update UI
+        updateUIFields() ;
+    }
+
+    public void clearAllData(View view)
+    {
+        CaregiverList caregiverResults = new CaregiverList() ;
+        ReadingList readings = new ReadingList() ;
+
+        complexPreferences.putObject("caregiverList", caregiverResults);
+        complexPreferences.commit();
+
+        complexPreferences.putObject("readingList", readings);
+        complexPreferences.commit();
+
+        pcg.getPatient().setReadings(readings);
+        pcg.setSecondaryCaregivers(caregiverResults);
+
+        complexPreferences.putObject("pcg", pcg) ;
+        complexPreferences.commit();
+
+        complexPreferences.wipePreferences(objectPreference, "data") ;
+        complexPreferences.commit();
+
+
+
+
         updateUIFields() ;
     }
 
@@ -210,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
         */
     }
 
-
+    /*
     private ArrayList<Caregiver> GetSearchResultsFromPreferences() {
         ArrayList<Caregiver> results = new ArrayList<>();
         int count;
@@ -225,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
         //Log.d(LOG_TAG, results.toString());
         return results;
     }
+    */
 
     public void startCaregivers(View view) {
         startCaregivers();

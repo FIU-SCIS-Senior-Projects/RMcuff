@@ -1,0 +1,87 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="marc.example.com.rmcuffv1_patient.RegistrationPage">
+
+    <TextView android:text="Please fill out all info in registration form below." android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/instructions" />
+
+    <TextView android:text="Your Info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/yourInfo"
+        android:layout_below="@+id/instructions"
+        android:textStyle="bold"
+        android:textColor="@color/title_text"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/yourName"
+        android:layout_below="@+id/yourInfo"
+        android:hint="Enter your name"
+        android:layout_marginTop="5dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/yourPhone"
+        android:layout_below="@+id/yourName"
+        android:hint="Enter your phone number"
+        android:layout_marginTop="15dp" />
+
+    <TextView android:text="No special characters. Ex: 7864445555"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/phone_instruct_1"
+        android:layout_below="@+id/yourPhone"
+        android:layout_marginTop="5dp"/>
+
+
+    <TextView android:text="Your Care Provider's Info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/theirInfo"
+        android:layout_below="@+id/phone_instruct_1"
+        android:textStyle="bold"
+        android:textColor="@color/title_text"
+        android:layout_marginTop="50dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/theirName"
+        android:layout_below="@+id/theirInfo"
+        android:hint="Enter Care Provider's name"
+        android:layout_marginTop="15dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/theirPhone"
+        android:layout_below="@+id/theirName"
+        android:hint="Enter Care Provider's phone number"
+        android:layout_marginTop="15dp" />
+
+    <TextView android:text="No special characters. Ex: 7864445555"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/phone_instruct_2"
+        android:layout_below="@+id/theirPhone"
+        android:layout_marginTop="5dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/submit"
+        android:text="Update Info"
+        android:layout_below="@+id/phone_instruct_2"
+        android:layout_marginTop="10dp"
+        android:onClick="submitForm"/>
+
+</RelativeLayout>

@@ -12,9 +12,9 @@ public class PrimaryCaregiver implements Serializable
 {
     private String primaryCaregiverID ;         /* Unique Identifier (phoneNum in this case) */
     private MyPatient patient ;                 /* A condensed version of the Patient App's Patient Class */
-    private ArrayList<Caregiver> secondaryCaregivers ;            /* All the secondary caregivers */
+    private CaregiverList secondaryCaregivers ;            /* All the secondary caregivers */
 
-    public PrimaryCaregiver(String primaryCaregiverID, MyPatient patient, ArrayList<Caregiver> secondaryCaregivers)
+    public PrimaryCaregiver(String primaryCaregiverID, MyPatient patient, CaregiverList secondaryCaregivers)
     {
         this.primaryCaregiverID = primaryCaregiverID ;
         this.patient = patient ;
@@ -33,7 +33,7 @@ public class PrimaryCaregiver implements Serializable
 
         SmsManager msgManager = SmsManager.getDefault() ;
 
-        for (Caregiver cg : secondaryCaregivers) {
+        for (Caregiver cg : secondaryCaregivers.getCaregiverList()) {
             if (cg.getNotify() == true) {
                 msgManager.sendTextMessage(cg.getPhoneNum(), null, message, null, null);
             }
@@ -58,11 +58,11 @@ public class PrimaryCaregiver implements Serializable
         this.patient = patient;
     }
 
-    public ArrayList<Caregiver> getSecondaryCaregivers() {
+    public CaregiverList getSecondaryCaregivers() {
         return secondaryCaregivers;
     }
 
-    public void setSecondaryCaregivers(ArrayList<Caregiver> secondaryCaregivers) {
+    public void setSecondaryCaregivers(CaregiverList secondaryCaregivers) {
         this.secondaryCaregivers = secondaryCaregivers;
     }
 }

@@ -36,7 +36,8 @@ public class CaregiversPage extends Activity {
         this.setContentView(R.layout.activity_caregivers_page);
 
         objectPreference = (ObjectPreference) this.getApplication();
-        objectPreference.createNewComplexFile("caregivers");
+        //objectPreference.createNewComplexFile("caregivers");
+        objectPreference.createNewComplexFile("data");
 
         complexPreferences = objectPreference.getComplexPreference();
         caregiverListView = (ListView) findViewById(R.id.caregiverListView);
@@ -56,10 +57,10 @@ public class CaregiversPage extends Activity {
 
         // NEW
         try {
-            ArrayList<Caregiver> caregiverResults = GetSearchResultsFromPreferences();
+            CaregiverList caregiverResults = complexPreferences.getObject("caregiverList", CaregiverList.class) ;
 
-            if (!caregiverResults.isEmpty()) {
-                for (Caregiver cg : caregiverResults) {
+            if (!caregiverResults.getCaregiverList().isEmpty()) {
+                for (Caregiver cg : caregiverResults.getCaregiverList()) {
                     if (cg.getNotify()) // if the notify box is checked
                     {
                         msgManager.sendTextMessage(cg.getPhoneNum(), null, message, null, null);
@@ -114,7 +115,12 @@ public class CaregiversPage extends Activity {
                 o = caregiverListView.getItemAtPosition(info.position);
                 fullObject = (Caregiver) o;
 
-                complexPreferences.removeObject(String.valueOf(info.position));
+                CaregiverList caregiverResults = complexPreferences.getObject("caregiverList", CaregiverList.class) ;
+                caregiverResults.remove(info.position) ;
+
+                //complexPreferences.removeObject(String.valueOf(info.position));
+                complexPreferences.putObject("caregiverList", caregiverResults);
+                complexPreferences.commit();
 
                 Log.d(LOG_TAG, "DELETING: " + " " + fullObject.getFirstName());
 
@@ -164,9 +170,9 @@ public class CaregiversPage extends Activity {
 
         //Log.d(LOG_TAG, caregiverListView.toString());
         try {
-            ArrayList<Caregiver> caregiverResults = GetSearchResultsFromPreferences();
+            final CaregiverList caregiverResults = complexPreferences.getObject("caregiverList", CaregiverList.class) ;
 
-            caregiverListView.setAdapter(new CustomArrayAdapter(this, caregiverResults));
+            caregiverListView.setAdapter(new CustomArrayAdapter(this, caregiverResults.getCaregiverList()));
 
             caregiverListView.setOnItemClickListener(new OnItemClickListener() {
                 @Override
@@ -176,7 +182,11 @@ public class CaregiversPage extends Activity {
 
                     fullObject.setNotify(!fullObject.getNotify());
 
-                    complexPreferences.putObject(String.valueOf(position), fullObject);
+                    caregiverResults.replace(position, fullObject) ;
+                    //caregiverResults.add(position, fullObject) ;
+
+                    //complexPreferences.putObject(String.valueOf(position), fullObject);
+                    complexPreferences.putObject("caregiverList", caregiverResults);
                     complexPreferences.commit();
 
                     Log.d(LOG_TAG, "CHOSE: " + " " + fullObject.getFirstName());
@@ -189,6 +199,7 @@ public class CaregiversPage extends Activity {
         }
     }
 
+    /*
     private ArrayList<Caregiver> GetSearchResultsFromPreferences() {
         ArrayList<Caregiver> results = new ArrayList<>();
         int count;
@@ -203,4 +214,5 @@ public class CaregiversPage extends Activity {
         //Log.d(LOG_TAG, results.toString());
         return results;
     }
+    */
 }

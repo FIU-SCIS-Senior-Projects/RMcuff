@@ -30,7 +30,8 @@ public class NewCaregiverPage extends Activity {
         setContentView(R.layout.activity_new_caregiver_page);
 
         objectPreference = (ObjectPreference) this.getApplication();
-        objectPreference.createNewComplexFile("caregivers");
+        //objectPreference.createNewComplexFile("caregivers");
+        objectPreference.createNewComplexFile("data");
 
         complexPreferences = objectPreference.getComplexPreference();
 
@@ -108,7 +109,7 @@ public class NewCaregiverPage extends Activity {
 
                 super.onBackPressed();
             } else {
-                updateComplexPreferencesCount();
+                //updateComplexPreferencesCount();
                 saveToComplexPreferences();
 
                 setCaregiverStatus("Caregiver Added!");
@@ -142,6 +143,7 @@ public class NewCaregiverPage extends Activity {
         v.setText(status);
     }
 
+    /*
     private void updateComplexPreferencesCount() {
         if (complexPreferences != null) {
             caregiver.setUserID(complexPreferences.getCount());
@@ -152,10 +154,17 @@ public class NewCaregiverPage extends Activity {
             Log.d(LOG_TAG, "ERROR WRITING USER COUNT");
         }
     }
+    */
 
     private void saveToComplexPreferences() {
         if (complexPreferences != null) {
-            complexPreferences.putObject(String.valueOf(caregiver.getUserID()), caregiver);
+            CaregiverList cgl = complexPreferences.getObject("caregiverList", CaregiverList.class) ;
+            if (cgl == null) cgl = new CaregiverList() ;
+
+            cgl.add(0, caregiver) ;
+
+            //complexPreferences.putObject(String.valueOf(caregiver.getUserID()), caregiver);
+            complexPreferences.putObject("caregiverList", cgl);
             complexPreferences.commit();
 
             Log.d(LOG_TAG, "WRITING TO COMPLEXPREF: " + (caregiver));

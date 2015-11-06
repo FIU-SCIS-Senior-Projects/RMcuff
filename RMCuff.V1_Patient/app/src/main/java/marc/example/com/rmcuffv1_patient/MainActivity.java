@@ -36,8 +36,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Pushbots.sharedInstance().init(this);
-        //Pushbots.sharedInstance().setCustomHandler(CustomHandler.class);
+        //register() ;
+
+        Pushbots.sharedInstance().init(this);
+        Pushbots.sharedInstance().setCustomHandler(CustomHandler.class);
 
         System.out.println("XXX4 WORKS4") ;
         objectPreference = (ObjectPreference) this.getApplication();
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         // LOAD ALL STORED DATA
         patient = new Patient("7864445555", "7863158886", "Luke", new Date(), readings, schedule, new Device("0")) ;
 
-        //Pushbots.sharedInstance().setAlias(patient.getPatientID()) ;
+        Pushbots.sharedInstance().setAlias(patient.getPatientID()) ;
 
         // Update UI
         updateUIFields() ;
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         if(patient.getSchedule().size() > 0)
         {
             System.out.println("&&&&" + patient.getSchedule().size()) ;
-            scheduleAdapter.add(patient.getSchedule().get(0).getDate().toString());
+            scheduleAdapter.add(patient.getSchedule().get(0).toString());
         }
         else
         {
@@ -118,6 +120,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void register()
+    {
+        Intent registerPage = new Intent(this, RegistrationPage.class);
+        startActivity(registerPage);
     }
 
     public void makeCall(View view) { makePhoneCall(); }
