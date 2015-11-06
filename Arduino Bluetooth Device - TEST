@@ -1,0 +1,132 @@
+//PWM RGD LED
+const int RED_RGB_PIN = 11;
+const int GREEN_RGB_PIN = 10;
+const int BLUE_RGB_PIN = 9;
+
+//PWM INDIVIDUAL RGD LED
+const int RED_LED_PIN = 6;
+const int GREEN_LED_PIN = 5;
+const int BLUE_LED_PIN = 3;
+
+//ANALOG IN RGB POTS
+const int RED_POT_PIN = 0;
+const int GREEN_POT_PIN = 1;
+const int BLUE_POT_PIN = 2;
+
+//STORES CURRENT COLOR VALUE
+int currentColorValueRed;
+int currentColorValueGreen;
+int currentColorValueBlue;
+
+//STATUS LED
+const int STATUS_LED_PIN = 12;
+
+//BLUETOOTH INTERFACE STORAGE
+boolean ledToggle = false;
+String inputString = "";
+String command = "";
+String value = "";
+boolean stringComplete = false;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(RED_RGB_PIN, OUTPUT);
+  pinMode(GREEN_RGB_PIN, OUTPUT);
+  pinMode(BLUE_RGB_PIN, OUTPUT); 
+  
+  pinMode(RED_LED_PIN, OUTPUT);
+  pinMode(GREEN_LED_PIN, OUTPUT);
+  pinMode(BLUE_LED_PIN, OUTPUT);
+
+  pinMode(STATUS_LED_PIN, OUTPUT);
+  digitalWrite(STATUS_LED_PIN, LOW);
+
+  inputString.reserve(50);
+  command.reserve(50);
+  value.reserve(50);
+}
+
+void loop() {
+  currentColorValueRed = (map(analogRead(RED_POT_PIN), 0, 1024, 0, 255 ) );
+  currentColorValueGreen = ( map(analogRead(GREEN_POT_PIN), 0, 1024, 0, 255 ) );
+  currentColorValueBlue = (map(analogRead(BLUE_POT_PIN), 0, 1024, 0, 255 ) );
+
+  setColor(currentColorValueRed, currentColorValueGreen, currentColorValueBlue);
+
+  int intValue = 0;
+  
+  if (stringComplete) {
+    boolean stringOK = false;
+    
+    if (inputString.startsWith("CMD ")) {
+      inputString = inputString.substring(4);
+      
+      int pos = inputString.indexOf('=');
+      
+      if (pos > -1) {
+        command = inputString.substring(0, pos);
+        value = inputString.substring(pos+1, inputString.length()-1);
+        Serial.println(command);
+        Serial.println(value);
+        
+        if (command.equals("LED")) { 
+          value.equals("ON") ? digitalWrite(STATUS_LED_PIN, HIGH) : digitalWrite(STATUS_LED_PIN, LOW);
+          value.equals("ON") ? ledToggle = true : ledToggle = false;
+          stringOK = true;
+        }
+      }
+    }
+    
+    if (inputString.startsWith("STATUS")) {
+      Serial.print("STATUS LED = ");
+      Serial.println(ledToggle);
+      Serial.print("STATUS RED = ");
+      Serial.println(currentColorValueRed);
+      Serial.print("STATUS GREEN = ");
+      Serial.println(currentColorValueGreen);
+      Serial.print("STATUS BLUE = ");
+      Serial.println(currentColorValueBlue);
+      stringOK = true;
+    }
+    
+    stringOK ? Serial.println("Command Executed") : Serial.println("Invalid Command");
+    
+    inputString = "";
+    stringComplete = false;
+  }
+  
+  delay(20);
+}
+
+/*
+ * SerialEvent occurs whenever a new data comes in the
+ * hardware serial RX.  This routine is run between each
+ * time loop() runs, so using delay inside loop can delay
+ * response.  Multiple bytes of data may be available.
+ */
+void serialEvent() {
+  while (Serial.available()) {
+    char inChar = (char)Serial.read(); 
+    Serial.write(inChar);
+
+    inputString += inChar;
+
+    if (inChar == '\n' || inChar == '\r') {
+      stringComplete = true;
+    } 
+  }
+}
+
+/*
+ * Set color of the RGD LED according to th RGD value passed.
+ * Values based off a 0-255 range.
+ */
+void setColor(int red, int green, int blue) {
+  analogWrite(RED_RGB_PIN, red);
+  analogWrite(GREEN_RGB_PIN, green);
+  analogWrite(BLUE_RGB_PIN, blue);  
+
+  analogWrite(RED_LED_PIN, red);
+  analogWrite(GREEN_LED_PIN, green);
+  analogWrite(BLUE_LED_PIN, blue); 
+}
