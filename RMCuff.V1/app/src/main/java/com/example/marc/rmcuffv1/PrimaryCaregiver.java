@@ -11,12 +11,14 @@ import java.util.ArrayList;
 public class PrimaryCaregiver implements Serializable
 {
     private String primaryCaregiverID ;         /* Unique Identifier (phoneNum in this case) */
+    private String name ;
     private MyPatient patient ;                 /* A condensed version of the Patient App's Patient Class */
     private CaregiverList secondaryCaregivers ;            /* All the secondary caregivers */
 
-    public PrimaryCaregiver(String primaryCaregiverID, MyPatient patient, CaregiverList secondaryCaregivers)
+    public PrimaryCaregiver(String primaryCaregiverID,String pcgName, MyPatient patient, CaregiverList secondaryCaregivers)
     {
         this.primaryCaregiverID = primaryCaregiverID ;
+        this.name = pcgName ;
         this.patient = patient ;
         this.secondaryCaregivers = secondaryCaregivers ;
     }
@@ -46,10 +48,16 @@ public class PrimaryCaregiver implements Serializable
         return primaryCaregiverID;
     }
 
+    public String getPrimaryCaregiverName() {
+        return name;
+    }
     public void setPrimaryCaregiverID(String primaryCaregiverID) {
         this.primaryCaregiverID = primaryCaregiverID;
     }
 
+    public void setPrimaryCaregiverName(String pcgName) {
+        this.name = pcgName;
+    }
     public MyPatient getPatient() {
         return patient;
     }

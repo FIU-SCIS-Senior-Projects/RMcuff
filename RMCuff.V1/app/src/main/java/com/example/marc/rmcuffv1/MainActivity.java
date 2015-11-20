@@ -63,33 +63,60 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("XXX5 WORKS5") ;
             caregiverResults = complexPreferences.getObject("caregiverList", CaregiverList.class) ;
             readings = complexPreferences.getObject("readingList", ReadingList.class ) ;
+            pcg = complexPreferences.getObject("pcg", PrimaryCaregiver.class) ;
         }
 
+        if (pcg == null)
+            register() ;
         if( readings == null)
             readings = new ReadingList() ;
-
         if (caregiverResults == null)
             caregiverResults = new CaregiverList() ;
 
 
-        MyPatient patient = new MyPatient("7864445555", "Luke Skywalkwer", new Date(), readings, new Schedule()) ;
-        pcg = new PrimaryCaregiver("7863158886", patient, caregiverResults) ;
-
-        if (complexPreferences != null)
-        {
-            System.out.println("$$$$$$*********\n");
-            complexPreferences.putObject("pcg", pcg);
-            complexPreferences.commit();
-        }
+        // MyPatient patient = new MyPatient("7864445555", "Luke Skywalkwer", readings, new ScheduleList()) ;
+        // pcg = new PrimaryCaregiver("7863158886", patient, caregiverResults) ;
 
 
         //Dynamic Load
-        pcg = complexPreferences.getObject("pcg", PrimaryCaregiver.class) ;
 
+
+        if (pcg != null)
+        {
+            pcg.setSecondaryCaregivers(caregiverResults) ;
+            pcg.getPatient().setReadings(readings) ;
+            complexPreferences.putObject("pcg", pcg) ;
+            complexPreferences.commit() ;
+
+
+            Pushbots.sharedInstance().setAlias(pcg.getPrimaryCaregiverID()) ;
+            // Update UI
+            updateUIFields() ;
+        }
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        System.out.println("+++++ Restart") ;
+
+        pcg = complexPreferences.getObject("pcg", PrimaryCaregiver.class ) ;
+
+        if(pcg == null)
+            register() ;
+
+        // Set pushbots data again
         Pushbots.sharedInstance().setAlias(pcg.getPrimaryCaregiverID()) ;
 
-        // Update UI
         updateUIFields() ;
+    }
+
+    private void register()
+    {
+        Intent registerPage = new Intent(this, RegistrationPage.class);
+        startActivity(registerPage);
     }
 
     public void clearAllData(View view)
@@ -97,25 +124,17 @@ public class MainActivity extends AppCompatActivity {
         CaregiverList caregiverResults = new CaregiverList() ;
         ReadingList readings = new ReadingList() ;
 
-        complexPreferences.putObject("caregiverList", caregiverResults);
+        complexPreferences.removeObject("caregiverList");
         complexPreferences.commit();
 
-        complexPreferences.putObject("readingList", readings);
+        complexPreferences.removeObject("readingList");
         complexPreferences.commit();
 
-        pcg.getPatient().setReadings(readings);
-        pcg.setSecondaryCaregivers(caregiverResults);
-
-        complexPreferences.putObject("pcg", pcg) ;
+        complexPreferences.removeObject("pcg");
         complexPreferences.commit();
 
-        complexPreferences.wipePreferences(objectPreference, "data") ;
-        complexPreferences.commit();
-
-
-
-
-        updateUIFields() ;
+        pcg = null ;
+        register() ;
     }
 
     public void updateUIFields()
@@ -142,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Set textFields
-        pcgWelcome.setText("Welcome, David!" ) ;
+        pcgWelcome.setText("Welcome, " + pcg.getPrimaryCaregiverName() + "!") ;
         patientName.setText(pcg.getPatient().getName());
         patientPhone.setText(pcg.getPatient().getPatientID()) ;
 

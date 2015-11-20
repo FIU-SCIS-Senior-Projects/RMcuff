@@ -8,6 +8,12 @@
     android:background="@color/background_color"
     tools:context=".MainActivity">
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
     <TextView android:text="Hello Patient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -125,5 +131,16 @@
 
     </RelativeLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear Data (testing)"
+        android:id="@+id/testButton"
+        android:onClick="clearAllData"
+        android:layout_below="@+id/quickGlance"
+        android:layout_marginTop="5pt"/>
+
+   </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

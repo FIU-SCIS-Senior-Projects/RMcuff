@@ -93,7 +93,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/quickGlanceTitle"
             android:textStyle="bold"
-            android:layout_marginBottom="2pt"
             android:textColor="@color/title_text"/>
 
         <TextView android:text="Next Reading"
@@ -102,13 +101,14 @@
             android:id="@+id/scheduleListTitle"
             android:layout_below="@+id/quickGlanceTitle"
             android:textStyle="bold"
+            android:layout_marginTop="2pt"
             android:textColor="@color/subtitle_text"/>
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/scheduleListTitle"
-            android:layout_marginTop="0pt"
+            android:layout_marginTop="2pt"
             android:id="@+id/scheduleInfoList">
         </ListView>
 

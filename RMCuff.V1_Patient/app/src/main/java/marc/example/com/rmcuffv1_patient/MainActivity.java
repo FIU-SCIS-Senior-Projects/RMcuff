@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         ScheduleList schedule = null ;
         ReadingList readings = null ;
+        patient = null ;
 
         if( complexPreferences != null )
         {
@@ -57,8 +58,11 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("XXX5 WORKS5") ;
             schedule = complexPreferences.getObject("scheduleList", ScheduleList.class ) ;
             readings = complexPreferences.getObject("readingList", ReadingList.class ) ;
+            patient = complexPreferences.getObject("patient", Patient.class ) ;
         }
 
+        if(patient == null)
+            register() ;
         if(schedule == null)
             schedule = new ScheduleList() ;
         if(readings == null)
@@ -66,12 +70,51 @@ public class MainActivity extends AppCompatActivity {
 
 
         // LOAD ALL STORED DATA
-        patient = new Patient("7864445555", "7863158886", "Luke", new Date(), readings, schedule, new Device("0")) ;
+        //patient = new Patient("7864445555", "7863158886", "Luke", new Date(), readings, schedule, new Device("0")) ;
+        if (patient != null)
+        {
+            patient.setReadings(readings) ;
+            patient.setSchedule(schedule);
+            complexPreferences.putObject("patient", patient) ;
+            complexPreferences.commit() ;
 
+            Pushbots.sharedInstance().setAlias(patient.getPatientID()) ;
+
+            // Update UI
+            updateUIFields() ;
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        System.out.println("+++++ Restart") ;
+
+        patient = complexPreferences.getObject("patient", Patient.class ) ;
+
+        if(patient == null)
+            register() ;
+
+        // Set pushbots data again
         Pushbots.sharedInstance().setAlias(patient.getPatientID()) ;
 
-        // Update UI
         updateUIFields() ;
+    }
+
+    public void clearAllData(View view)
+    {
+        complexPreferences.removeObject("patient");
+        complexPreferences.commit();
+
+        complexPreferences.removeObject("readingList");
+        complexPreferences.commit();
+
+        complexPreferences.removeObject("scheduleList");
+        complexPreferences.commit();
+
+        patient = null ;
+        register() ;
     }
 
     public void updateUIFields()
@@ -94,32 +137,31 @@ public class MainActivity extends AppCompatActivity {
         scheduleList.setAdapter(scheduleAdapter);
 
         // Set textFields
-        patientWelcome.setText("Welcome, " + patient.getName() + "!") ;
-        pcgName.setText("David Baez");
-        pcgPhone.setText(patient.getPrimaryCaregiverID()) ;
 
-        if(patient.getSchedule().size() > 0)
-        {
-            System.out.println("&&&&" + patient.getSchedule().size()) ;
+        patientWelcome.setText("Welcome, " + patient.getName() + "!");
+        pcgName.setText(patient.getPrimaryCaregiverName());
+        pcgPhone.setText(patient.getPrimaryCaregiverID());
+
+        // future readings
+        if (patient.getSchedule().size() > 0) {
+            System.out.println("&&&&" + patient.getSchedule().size());
             scheduleAdapter.add(patient.getSchedule().get(0).toString());
-        }
-        else
-        {
+        } else {
             scheduleAdapter.add("No readings have been scheduled ...");
         }
 
-        ReadingList readings = patient.getReadings() ;
-        if(readings.size() == 0 )
-            readingsAdapter.add("No readings have been taken ..") ;
-
-        for (int i = 0; i < 3; i++)
-        {
-            if(readings.size() > i)
-            {
-                readingsAdapter.add(readings.get(i).toString()) ;
+        // Past readings
+        ReadingList readings = patient.getReadings();
+        if (readings.size() == 0)
+            readingsAdapter.add("No readings have been taken ..");
+        System.out.println("##### " + readings.size()) ;
+        for (int i = 0; i < 3; i++) {
+            System.out.println("AAAAAAA") ;
+            if (readings.size() > i) {
+                readingsAdapter.add(readings.get(i).toString());
+                System.out.println("BBBBBB") ;
             }
         }
-
     }
 
     private void register()
@@ -181,8 +223,11 @@ public class MainActivity extends AppCompatActivity {
             Reading toReading = new Reading(rSys, rDia, new Date());
             String toSend = GSON.toJson(toReading, Reading.class) ;
 
-            patient.getReadings().add(0, toReading) ;
+            ReadingList rl = patient.getReadings() ;
+            rl.add(0, toReading);
+            patient.setReadings(rl) ;
             complexPreferences.putObject("readingList", patient.getReadings()) ;
+            complexPreferences.commit() ;
             updateUIFields() ;
 
             Post post = new Post() ;

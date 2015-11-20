@@ -80,7 +80,11 @@
             android:name=".NewSchedulePage"
             android:label="@string/title_activity_new_schedule_page"
             android:launchMode="singleInstance"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".RegistrationPage"
+            android:label="@string/title_activity_registration_page" >
         </activity>
     </application>
 

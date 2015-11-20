@@ -40,4 +40,5 @@
     <string name="title_activity_new_schedule_page">NewSchedulePage</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_registration_page">RegistrationPage</string>
 </resources>

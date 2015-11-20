@@ -12,24 +12,21 @@ public class MyPatient
 {
     private String patientID ;
     private String name ;
-    private Date birthDate ;
     private ReadingList readings ;               /* List of last N readings (N to be determined later) */
-    private Schedule scheduled ;                /* The next scheduled reading */
+    private ScheduleList scheduled ;                /* The next scheduled reading */
 
 
     public MyPatient(String name)
     {
         this.name = name ;
         this.patientID = null ;
-        this.birthDate = null ;
         this.readings = null ;
         this.scheduled = null ;
     }
-    public MyPatient(String patientID, String name, Date dob, ReadingList readings, Schedule scheduled)
+    public MyPatient(String patientID, String name, ReadingList readings, ScheduleList scheduled)
     {
         this.patientID = patientID ;
         this.name = name ;
-        this.birthDate = dob ;
         this.readings = readings ;
         this.scheduled = scheduled ;
     }
@@ -41,13 +38,9 @@ public class MyPatient
         return name;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
     public ReadingList getReadings() {return readings;}
 
-    public Schedule getScheduled() {
+    public ScheduleList getScheduled() {
         return scheduled;
     }
 
@@ -60,14 +53,10 @@ public class MyPatient
         this.name = name;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
     public void setReadings(ReadingList readings) {
         this.readings = readings;
     }
 
-    public void setScheduled(Schedule scheduled) {this.scheduled = scheduled;}
+    public void setScheduled(ScheduleList scheduled) {this.scheduled = scheduled;}
 
 }

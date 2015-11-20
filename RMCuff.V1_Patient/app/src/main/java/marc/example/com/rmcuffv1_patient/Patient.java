@@ -12,28 +12,30 @@ public class Patient
 {
     private String patientID ;                  /* Unique patient identifier (PhoneNum in our case) */
     private String primaryCaregiverID ;         /* Unique ID for the primary caregiver (PhoneNum in our case) */
+    private String primaryCaregiverName ;
     private String name ;
-    private Date birthDate ;
     private ReadingList readings ;               /* List of last N readings (N to be determined later) */
     private ScheduleList schedule ;                /* The next scheduled reading */
     private Device device ;                     /* The actual bluetooth cuff */
 
+    /*
     public Patient(String name)
     {
         this.patientID = null ; // this will technically not be allowed, just for quick testing purposes
         this.primaryCaregiverID = null ;
         this.name = name ;
-        this.birthDate = null ;
+        this.
         this.readings = null ;
         this.schedule = null ;
         this.device = null ;
     }
-    public Patient(String patientID, String primaryCaregiverID, String name, Date dob, ReadingList readings, ScheduleList schedule, Device device)
+    */
+    public Patient(String patientID, String primaryCaregiverID, String name, String pcgName,  ReadingList readings, ScheduleList schedule, Device device)
     {
         this.patientID = patientID ;
         this.primaryCaregiverID = primaryCaregiverID ;
+        this.primaryCaregiverName = pcgName ;
         this.name = name ;
-        this.birthDate = dob ;
         this.readings = readings ;
         this.schedule = schedule ;
         this.device = device ;
@@ -56,11 +58,10 @@ public class Patient
 
     public String getPrimaryCaregiverID() {return primaryCaregiverID;}
 
+    public String getPrimaryCaregiverName() {return primaryCaregiverName;}
+
     public String getName() { return name; }
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
 
 
 
@@ -82,11 +83,12 @@ public class Patient
 
     public void setPrimaryCaregiverID(String primaryCaregiverID) {this.primaryCaregiverID = primaryCaregiverID;}
 
+    public void setPrimaryCaregiverName(String primaryCaregiverName) {this.primaryCaregiverName = primaryCaregiverName;}
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setBirthDate(Date birthDate) { this.birthDate = birthDate; }
 
     public void setReadings(ReadingList readings) {
         this.readings = readings;

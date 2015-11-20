@@ -1,4 +1,5 @@
-package marc.example.com.rmcuffv1_patient;
+package com.example.marc.rmcuffv1;
+
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -31,27 +32,15 @@ public class RegistrationPage extends AppCompatActivity {
         EditText theirName = (EditText) findViewById(R.id.theirName) ;
         EditText theirPhone = (EditText) findViewById(R.id.theirPhone) ;
 
-        String pName = yourName.getText().toString() ;
-        String cgName = theirName.getText().toString() ;
-        String pNum = yourPhone.getText().toString() ;
-        String cgNum = theirPhone.getText().toString() ;
+        String cgName = yourName.getText().toString() ;
+        String pName = theirName.getText().toString() ;
+        String cgNum = yourPhone.getText().toString() ;
+        String pNum = theirPhone.getText().toString() ;
 
         System.out.println("Name:" + yourName.getText() + "\n" + "#:" + yourPhone.getText() + "\n" + "their name:" + theirName.getText() + "\n" + "their #:" + theirPhone.getText()) ;
 
         boolean readyToRegister = true ;
 
-
-
-        if (empty(pName))
-        {
-            readyToRegister = false ;
-            yourName.setError("Please Enter your Name");
-        }
-        if (empty(pNum) || invalid(pNum))
-        {
-            readyToRegister = false ;
-            yourPhone.setError("Please enter a valid Phone Number (10 digits)(No special Characters)");
-        }
         if (empty(cgName))
         {
             readyToRegister = false ;
@@ -62,13 +51,25 @@ public class RegistrationPage extends AppCompatActivity {
             readyToRegister = false ;
             theirPhone.setError("Please enter a valid Phone Number (10 digits)(No special Characters)");
         }
+        if (empty(pName))
+        {
+            readyToRegister = false ;
+            yourName.setError("Please Enter your Name");
+        }
+        if (empty(pNum) || invalid(pNum))
+        {
+            readyToRegister = false ;
+            yourPhone.setError("Please enter a valid Phone Number (10 digits)(No special Characters)");
+        }
 
         if(readyToRegister)
         {
             // Save Data and exit this page
             //(String patientID, String primaryCaregiverID, String name,  ReadingList readings, ScheduleList schedule, Device device)
-            Patient patient = new Patient(pNum, cgNum, pName, cgName, new ReadingList(), new ScheduleList(), null) ;
-            complexPreferences.putObject("patient", patient) ;
+
+            MyPatient patient = new MyPatient(pNum, pName,new ReadingList(), new ScheduleList()) ;
+            PrimaryCaregiver pcg = new PrimaryCaregiver(cgNum, cgName, patient, new CaregiverList() ) ;
+            complexPreferences.putObject("pcg", pcg) ;
             complexPreferences.commit() ;
             registrationComplete() ;
 
@@ -82,7 +83,7 @@ public class RegistrationPage extends AppCompatActivity {
     }
     public boolean invalid(String phoneNum)
     {
-        if(phoneNum.length() != 10 || !TextUtils.isDigitsOnly(phoneNum)) 
+        if(phoneNum.length() != 10 || !TextUtils.isDigitsOnly(phoneNum))
         {
             return true ;
         }

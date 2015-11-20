@@ -77,18 +77,17 @@ public class ComplexPreferences {
     }
 
 
-    /*
+
     public void removeObject(String key) {
         if (key.equals("") || key == null) {
             throw new IllegalArgumentException("Key is empty or null");
         }
         editor.remove(key);
-        recalculateCaregivers(Integer.parseInt(key));
-        setCount(getCount() - 1);
+
         commit();
         Log.d(LOG_TAG, "REMOVING: " + key);
     }
-    */
+
 
     /*
     private void recalculateCaregivers(int position) {

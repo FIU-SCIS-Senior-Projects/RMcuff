@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class CaregiversPage extends Activity {
     private Intent newCaregiver;
     private ObjectPreference objectPreference;
     private ComplexPreferences complexPreferences;
+    PrimaryCaregiver pcg ;
 
     private ListView caregiverListView;
 
@@ -42,6 +44,8 @@ public class CaregiversPage extends Activity {
         complexPreferences = objectPreference.getComplexPreference();
         caregiverListView = (ListView) findViewById(R.id.caregiverListView);
 
+        pcg = complexPreferences.getObject("pcg", PrimaryCaregiver.class) ;
+
         registerForContextMenu(caregiverListView);
         populateList();
     }
@@ -52,26 +56,47 @@ public class CaregiversPage extends Activity {
 
     private void sendTextMessage() {
 
-        String message = "Patient: Dustin M\n109/68 @ 15:15 08/25\n102/69 @ 20:15 08/24\n100/70 @ 17:12 08/23\n..." ;
-        SmsManager msgManager = SmsManager.getDefault() ;
+        if (pcg != null && pcg.getPatient().getReadings().size() != 0)
+        {
 
-        // NEW
-        try {
-            CaregiverList caregiverResults = complexPreferences.getObject("caregiverList", CaregiverList.class) ;
+            String message = "Patient: " + pcg.getPatient().getName() + "\n" ;
 
-            if (!caregiverResults.getCaregiverList().isEmpty()) {
-                for (Caregiver cg : caregiverResults.getCaregiverList()) {
-                    if (cg.getNotify()) // if the notify box is checked
-                    {
-                        msgManager.sendTextMessage(cg.getPhoneNum(), null, message, null, null);
-                    }
-                }
-                System.out.println("Message Sent!") ;
-            } else {
-                System.out.println("CaregiverList is empty..") ;
+            for (Reading r : pcg.getPatient().getReadings().getReadingList())
+            {
+                message += r.toString() + "\n" ;
             }
-        } catch (NullPointerException e) {
-            Log.d(LOG_TAG, "EMPTY LIST");
+
+            SmsManager msgManager = SmsManager.getDefault();
+
+            // NEW
+            try {
+                CaregiverList caregiverResults = complexPreferences.getObject("caregiverList", CaregiverList.class);
+
+                if (!caregiverResults.getCaregiverList().isEmpty()) {
+                    for (Caregiver cg : caregiverResults.getCaregiverList()) {
+                        if (cg.getNotify()) // if the notify box is checked
+                        {
+                            msgManager.sendTextMessage(cg.getPhoneNum(), null, message, null, null);
+                        }
+                    }
+                    System.out.println("Message Sent!");
+                    Toast.makeText(getApplicationContext(), "Message Sent!",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    System.out.println("CaregiverList is empty..");
+                    Toast.makeText(getApplicationContext(), "Empty caregiver List",
+                            Toast.LENGTH_LONG).show();
+                }
+            } catch (NullPointerException e) {
+                Log.d(LOG_TAG, "EMPTY LIST");
+                Toast.makeText(getApplicationContext(), "Empty caregiver list",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "You have no readings to report",
+                    Toast.LENGTH_LONG).show();
         }
     }
 
