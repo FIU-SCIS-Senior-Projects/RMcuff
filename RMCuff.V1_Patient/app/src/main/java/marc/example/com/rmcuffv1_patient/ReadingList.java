@@ -1,33 +1,24 @@
 package marc.example.com.rmcuffv1_patient;
 
-/**
- * Created by Davidb on 10/22/15.
- */
 import java.util.ArrayList;
 
+public class ReadingList {
+    private ArrayList<Reading> readingList;
 
-public class ReadingList
-{
-    private ArrayList<Reading> readingList ;
-
-    public ReadingList()
-    {
-        readingList = new ArrayList<Reading>() ;
+    public ReadingList() {
+        readingList = new ArrayList<>();
     }
 
-    public void add(int index, Reading reading)
-    {
-        readingList.add(index, reading) ;
+    public void add(int index, Reading reading) {
+        readingList.add(index, reading);
     }
 
-    public Reading get(int index)
-    {
-        return readingList.get(index) ;
+    public Reading get(int index) {
+        return readingList.get(index);
     }
 
-    public int size()
-    {
-        return readingList.size() ;
+    public int size() {
+        return readingList.size();
     }
 
     public ArrayList<Reading> getReadingList() {

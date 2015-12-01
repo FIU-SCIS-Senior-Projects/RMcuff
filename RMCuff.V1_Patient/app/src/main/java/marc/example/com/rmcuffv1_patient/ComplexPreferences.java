@@ -1,17 +1,10 @@
 package marc.example.com.rmcuffv1_patient;
 
-/**
- * Created by Davidb on 10/12/15.
- */
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 public class ComplexPreferences {
 
@@ -47,12 +40,12 @@ public class ComplexPreferences {
         if (object == null) {
             throw new IllegalArgumentException("Object is null");
         }
-        if (key.equals("") || key == null) {
+        if (key.equals("")) {
             throw new IllegalArgumentException("Key is empty or null");
         }
         editor.putString(key, GSON.toJson(object)).commit();
 
-        Log.d(LOG_TAG, "STORING: " + GSON.toJson(object).toString());
+        Log.d(LOG_TAG, "STORING: " + GSON.toJson(object));
     }
 
     public void commit() {
@@ -63,23 +56,19 @@ public class ComplexPreferences {
         String gson = preferences.getString(key, null);
         if (gson == null) {
             return null;
-        }
-        else {
+        } else {
             try {
                 Log.d(LOG_TAG, "RETRIEVING: " + GSON.fromJson(gson, a).toString());
                 return GSON.fromJson(gson, a);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new IllegalArgumentException("Object stored with key "
                         + key + " is instance of other class");
             }
         }
     }
 
-
-
     public void removeObject(String key) {
-        if (key.equals("") || key == null) {
+        if (key.equals("")) {
             throw new IllegalArgumentException("Key is empty or null");
         }
         editor.remove(key);
@@ -88,25 +77,12 @@ public class ComplexPreferences {
         Log.d(LOG_TAG, "REMOVING: " + key);
     }
 
-
-    /*
-    private void recalculateCaregivers(int position) {
-        int count = getCount();
-
-        for (int i = position + 1; i < count; i++) {
-            Caregiver c = getObject(String.valueOf(i), Caregiver.class);
-            c.setUserID(position);
-            putObject(String.valueOf(position), c);
-        }
+    public int getCount() {
+        return preferences.getInt("userCount", 0);
     }
-    */
 
     public void setCount(int value) {
         editor.putInt("userCount", value).commit();
-    }
-
-    public int getCount() {
-        return preferences.getInt("userCount", 0);
     }
 
     public void wipePreferences(Context context, String fileName) {
@@ -117,8 +93,7 @@ public class ComplexPreferences {
         Log.d(LOG_TAG, "WIPING: " + wipePreferences.toString());
     }
 
-    public String getAll()
-    {
-        return preferences.getAll().toString() ;
+    public String getAll() {
+        return preferences.getAll().toString();
     }
 }

@@ -2,30 +2,23 @@ package marc.example.com.rmcuffv1_patient;
 
 import java.util.ArrayList;
 
-/**
- * Created by Davidb on 10/21/15.
- */
-public class ScheduleList
-{
-    ArrayList<Schedule> scheduleList ;
+public class ScheduleList {
+    ArrayList<Schedule> scheduleList;
 
-    public ScheduleList()
-    {
-        scheduleList = new ArrayList<Schedule>() ;
+    public ScheduleList() {
+        scheduleList = new ArrayList<>();
     }
 
-    public void add(int index, Schedule schedule)
-    {
-        scheduleList.add(index, schedule) ;
+    public void add(int index, Schedule schedule) {
+        scheduleList.add(index, schedule);
     }
 
-    public Schedule get(int index)
-    {
-        return scheduleList.get(index) ;
+    public Schedule get(int index) {
+        return scheduleList.get(index);
     }
-    public int size()
-    {
-        return scheduleList.size() ;
+
+    public int size() {
+        return scheduleList.size();
     }
 
 
