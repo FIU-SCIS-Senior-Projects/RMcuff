@@ -41,15 +41,17 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static BluetoothResponseHandler mHandler;
     private static String address = "20:15:07:27:55:76";
+
     TextView testTextView;
+
     private Patient patient;
     private Gson GSON = new Gson();
     private ObjectPreference objectPreference;
     private ComplexPreferences complexPreferences;
     private BluetoothAdapter mBluetoothAdapter = null;
     private DeviceConnector connector;
-    private boolean hexMode, needClean;
-    private String command_ending;
+    private int retryCounter = 0;
+    private boolean btRetry = true;
 
     private GoogleApiClient client;
 
@@ -103,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
             updateUIFields();
         }
+
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
         if (mHandler == null) mHandler = new BluetoothResponseHandler(this);
@@ -229,7 +232,23 @@ public class MainActivity extends AppCompatActivity {
         if (networkInfo != null && networkInfo.isConnected()) {
             System.out.println("Connected");
 
-            bluetoothReadingPost();
+            if (connector.getState() == 2) {
+                bluetoothReadingPost();
+            } else {
+                if (btRetry) {
+                    checkBT();
+                    connectBt();
+                } else {
+                    btRetry = false;
+                    retryCounter = 11;
+                }
+
+                if (retryCounter++ < 11) {
+                    readingPostStart();
+                } else {
+                    retryCounter = 0;
+                }
+            }
         } else {
             System.out.println("No Connection");
         }
@@ -298,7 +317,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void connectBt() {
-        Log.d(LOG_TAG, address);
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         Log.d(LOG_TAG, "Connecting to ... " + device);
         mBluetoothAdapter.cancelDiscovery();
@@ -312,11 +330,12 @@ public class MainActivity extends AppCompatActivity {
     private void sendMessage(String data) {
         if (data.isEmpty()) return;
 
-        if (hexMode && (data.length() % 2 == 1)) {
-            data = "0" + data;
-        }
-        byte[] command = (hexMode ? Utils.toHex(data) : data.getBytes());
-        if (command_ending != null) command = Utils.concat(command, command_ending.getBytes());
+        //if (hexMode && (data.length() % 2 == 1)) {
+        //    data = "0" + data;
+        //}
+        //byte[] command = (hexMode ? Utils.toHex(data) : data.getBytes());
+        byte[] command = data.getBytes();
+        //if (command_ending != null) command = Utils.concat(command, command_ending.getBytes());
         if (isConnected()) {
             connector.write(command);
         }
@@ -378,15 +397,19 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://marc.example.com.rmcuffv1_patient/http/host/path")
         );
+
+        stopConnection();
+
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
 
-    void appendLog(String message, boolean hexMode, boolean outgoing, boolean clean) {
+    void appendLog(String message, boolean hexMode, boolean outgoing) {
 
         StringBuilder msg = new StringBuilder();
 
-        msg.append(hexMode ? Utils.printHex(message) : message);
+        //msg.append(hexMode ? Utils.printHex(message) : message);
+        msg.append(message);
         if (outgoing) msg.append('\n');
         testTextView.append(msg);
 
@@ -426,7 +449,7 @@ public class MainActivity extends AppCompatActivity {
                     case MESSAGE_READ:
                         final String readMessage = (String) msg.obj;
                         if (readMessage != null) {
-                            activity.appendLog(readMessage, false, false, activity.needClean);
+                            activity.appendLog(readMessage, false, false);
                             readingPostEndBLUGEN(readMessage);
                         }
                         break;
