@@ -30,7 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/yourInfo"
         android:layout_marginTop="5dp"
-        android:hint="Enter your name" />
+        android:hint="Enter your name"
+        android:inputType="textCapSentences|textPersonName"
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/yourPhone"
@@ -38,7 +40,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/yourName"
         android:layout_marginTop="15dp"
-        android:hint="Enter your phone number" />
+        android:hint="Enter your phone number"
+        android:inputType="phone"
+        android:phoneNumber="true"
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/phone_instruct_1"
@@ -65,7 +70,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/theirInfo"
         android:layout_marginTop="15dp"
-        android:hint="Enter Care Provider's name" />
+        android:hint="Enter Care Provider's name"
+        android:inputType="textCapSentences|textPersonName"
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/theirPhone"
@@ -73,7 +80,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/theirName"
         android:layout_marginTop="15dp"
-        android:hint="Enter Care Provider's phone number" />
+        android:hint="Enter Care Provider's phone number"
+        android:inputType="phone"
+        android:phoneNumber="true"
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/phone_instruct_2"
