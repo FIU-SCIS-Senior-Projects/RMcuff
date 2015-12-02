@@ -1,4 +1,4 @@
-package marc.example.com.rmcuffv1_patient;
+package marc.example.com.rmcuffv1_patient.PushPull;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,6 +16,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import marc.example.com.rmcuffv1_patient.Preferences.ComplexPreferences;
+import marc.example.com.rmcuffv1_patient.Preferences.ObjectPreference;
+import marc.example.com.rmcuffv1_patient.Settings.Schedules.Schedule;
+import marc.example.com.rmcuffv1_patient.Settings.Schedules.ScheduleList;
+
 public class CustomHandler extends BroadcastReceiver {
     private static final String TAG = "customHandler";
     private ObjectPreference objectPreference;
@@ -31,15 +36,9 @@ public class CustomHandler extends BroadcastReceiver {
         objectPreference.createNewComplexFile("data");
         complexPreferences = objectPreference.getComplexPreference();
 
-        System.out.println("XXX WORKS");
-
         if (complexPreferences != null) {
-            System.out.println("XXX2 WORKS2NEW");
             scheduleList = complexPreferences.getObject("scheduleList", ScheduleList.class);
         }
-
-        Log.d(TAG, "action=" + action);
-        System.out.println("$$$$$$$$$$$$$");
 
         // Handle Push Message when opened
         if (action.equals(PBConstants.EVENT_MSG_OPEN)) {
@@ -74,17 +73,12 @@ public class CustomHandler extends BroadcastReceiver {
 
             // Handle Push Message when received
         } else if (action.equals(PBConstants.EVENT_MSG_RECEIVE)) {
-            System.out.println("@@@@@@@@@@@@@@@2");
-
             HashMap<?, ?> PushdataOpen = (HashMap<?, ?>) intent.getExtras().get(PBConstants.EVENT_MSG_RECEIVE);
             if (PushdataOpen != null) {
-                Log.w(TAG, "#######User Received notification with Message: " + PushdataOpen.get("message"));
+                Log.w(TAG, "User Received notification with Message: " + PushdataOpen.get("message"));
             }
-            //System.out.println(PushdataOpen.toString()) ;
 
             if (PushdataOpen != null && PushdataOpen.containsKey("schedule")) {
-                System.out.println("%%%%%%% " + PushdataOpen.get("schedule"));
-
                 Schedule newSchedule = GSON.fromJson((String) PushdataOpen.get("schedule"), Schedule.class);
 
                 if (scheduleList == null) {

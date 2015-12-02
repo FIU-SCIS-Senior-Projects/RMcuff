@@ -1,4 +1,4 @@
-package marc.example.com.rmcuffv1_patient;
+package marc.example.com.rmcuffv1_patient.Settings;
 
 public class Settings {
     private boolean autoNotify;

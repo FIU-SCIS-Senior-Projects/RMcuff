@@ -9,6 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import marc.example.com.rmcuffv1_patient.Preferences.ComplexPreferences;
+import marc.example.com.rmcuffv1_patient.Preferences.ObjectPreference;
+import marc.example.com.rmcuffv1_patient.Settings.Patients.Patient;
+import marc.example.com.rmcuffv1_patient.Settings.Readings.ReadingList;
+import marc.example.com.rmcuffv1_patient.Settings.Schedules.ScheduleList;
+
 public class RegistrationPage extends AppCompatActivity {
 
     private ObjectPreference objectPreference;

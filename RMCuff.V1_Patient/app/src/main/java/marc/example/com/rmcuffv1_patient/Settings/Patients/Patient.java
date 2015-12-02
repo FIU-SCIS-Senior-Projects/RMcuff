@@ -1,4 +1,7 @@
-package marc.example.com.rmcuffv1_patient;
+package marc.example.com.rmcuffv1_patient.Settings.Patients;
+
+import marc.example.com.rmcuffv1_patient.Settings.Readings.ReadingList;
+import marc.example.com.rmcuffv1_patient.Settings.Schedules.ScheduleList;
 
 public class Patient {
     private String patientID;                  /* Unique patient identifier (PhoneNum in our case) */

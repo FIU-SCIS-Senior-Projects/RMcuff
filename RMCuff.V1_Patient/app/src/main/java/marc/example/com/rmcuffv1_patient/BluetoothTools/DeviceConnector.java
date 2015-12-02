@@ -1,4 +1,4 @@
-package marc.example.com.rmcuffv1_patient;
+package marc.example.com.rmcuffv1_patient.BluetoothTools;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import marc.example.com.rmcuffv1_patient.MainActivity;
+
 public class DeviceConnector {
     // Constants that indicate the current connection state
     public static final int STATE_NONE = 0;       // we're doing nothing
@@ -21,7 +23,6 @@ public class DeviceConnector {
     private final BluetoothAdapter btAdapter;
     private final BluetoothDevice connectedDevice;
     private final Handler mHandler;
-    private final String deviceName;
     private int mState;
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
@@ -30,7 +31,6 @@ public class DeviceConnector {
         mHandler = handler;
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         connectedDevice = btAdapter.getRemoteDevice(deviceData.getAddress());
-        deviceName = (deviceData.getName() == null) ? deviceData.getAddress() : deviceData.getName();
         mState = STATE_NONE;
     }
 

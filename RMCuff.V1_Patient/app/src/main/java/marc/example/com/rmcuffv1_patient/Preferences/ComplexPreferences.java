@@ -1,4 +1,4 @@
-package marc.example.com.rmcuffv1_patient;
+package marc.example.com.rmcuffv1_patient.Preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,11 +10,9 @@ public class ComplexPreferences {
 
     private static final String LOG_TAG = ComplexPreferences.class.getSimpleName();
     private static ComplexPreferences complexPreferences;
-    //private final Context context;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private Gson GSON = new Gson();
-    //Type T = new TypeToken<Object>(){}.getType();
 
     private ComplexPreferences(Context context, String namePreferences, int mode) {
         if (namePreferences == null || namePreferences.equals("")) {

@@ -1,4 +1,4 @@
-package marc.example.com.rmcuffv1_patient;
+package marc.example.com.rmcuffv1_patient.BluetoothTools;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
+
+import marc.example.com.rmcuffv1_patient.BuildConfig;
 
 public class Utils {
 

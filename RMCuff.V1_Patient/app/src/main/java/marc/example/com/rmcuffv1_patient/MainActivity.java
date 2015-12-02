@@ -30,7 +30,18 @@ import com.pushbots.push.Pushbots;
 
 import java.lang.ref.WeakReference;
 import java.util.Date;
-import java.util.Random;
+
+import marc.example.com.rmcuffv1_patient.BluetoothTools.DeviceConnector;
+import marc.example.com.rmcuffv1_patient.BluetoothTools.DeviceData;
+import marc.example.com.rmcuffv1_patient.BluetoothTools.Utils;
+import marc.example.com.rmcuffv1_patient.Preferences.ComplexPreferences;
+import marc.example.com.rmcuffv1_patient.Preferences.ObjectPreference;
+import marc.example.com.rmcuffv1_patient.PushPull.CustomHandler;
+import marc.example.com.rmcuffv1_patient.PushPull.Post;
+import marc.example.com.rmcuffv1_patient.Settings.Patients.Patient;
+import marc.example.com.rmcuffv1_patient.Settings.Readings.Reading;
+import marc.example.com.rmcuffv1_patient.Settings.Readings.ReadingList;
+import marc.example.com.rmcuffv1_patient.Settings.Schedules.ScheduleList;
 
 public class MainActivity extends AppCompatActivity {
     public static final int MESSAGE_STATE_CHANGE = 1;
@@ -50,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private ComplexPreferences complexPreferences;
     private BluetoothAdapter mBluetoothAdapter = null;
     private DeviceConnector connector;
-    private int retryCounter = 0;
-    private boolean btRetry = true;
+    private int retryCounter = 0, btRetry = 0;
 
     private GoogleApiClient client;
 
@@ -60,12 +70,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //register() ;
-
         Pushbots.sharedInstance().init(this);
         Pushbots.sharedInstance().setCustomHandler(CustomHandler.class);
 
-        System.out.println("XXX4 WORKS4");
         objectPreference = (ObjectPreference) this.getApplication();
         objectPreference.createNewComplexFile("data");
         complexPreferences = objectPreference.getComplexPreference();
@@ -78,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
             //complexPreferences.putObject("scheduleList", new ScheduleList()) ;
             //complexPreferences.putObject("readingList", new ReadingList()) ;
             //complexPreferences.commit() ;
-            System.out.println("XXX5 WORKS5");
             schedule = complexPreferences.getObject("scheduleList", ScheduleList.class);
             readings = complexPreferences.getObject("readingList", ReadingList.class);
             patient = complexPreferences.getObject("patient", Patient.class);
@@ -94,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
         testTextView = (TextView) findViewById(R.id.testTextView);
 
         // LOAD ALL STORED DATA
-        //patient = new Patient("7864445555", "7863158886", "Luke", new Date(), readings, schedule) ;
         if (patient != null) {
             patient.setReadings(readings);
             patient.setSchedule(schedule);
@@ -168,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
         pcgPhone.setText(patient.getPrimaryCaregiverID());
 
         if (patient.getSchedule().size() > 0) {
-            System.out.println("&&&&" + patient.getSchedule().size());
             scheduleAdapter.add(patient.getSchedule().get(0).toString());
         } else {
             scheduleAdapter.add("No readings have been scheduled ...");
@@ -177,12 +181,9 @@ public class MainActivity extends AppCompatActivity {
         ReadingList readings = patient.getReadings();
         if (readings.size() == 0)
             readingsAdapter.add("No readings have been taken ..");
-        System.out.println("##### " + readings.size());
         for (int i = 0; i < 3; i++) {
-            System.out.println("AAAAAAA");
             if (readings.size() > i) {
                 readingsAdapter.add(readings.get(i).toString());
-                System.out.println("BBBBBB");
             }
         }
     }
@@ -197,13 +198,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void makePhoneCall() {
-        System.out.println("##########7");
-
-        //TelephonyManager tm= (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         PackageManager pm = getPackageManager();
 
         if (!pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
-            System.out.println("Can't call");
             Toast.makeText(getApplicationContext(), "Calling Unavailable", Toast.LENGTH_LONG).show();
         } else {
             try {
@@ -218,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Could not make call " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
-
     }
 
     public void takeReading(View view) {
@@ -230,16 +226,15 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
-            System.out.println("Connected");
-
             if (connector.getState() == 2) {
                 bluetoothReadingPost();
             } else {
-                if (btRetry) {
+                Toast.makeText(getApplicationContext(), "Could not connect to Bluetooth\nPlease try again.", Toast.LENGTH_SHORT).show();
+                if (btRetry++ < 1) {
                     checkBT();
                     connectBt();
                 } else {
-                    btRetry = false;
+                    btRetry = 0;
                     retryCounter = 11;
                 }
 
@@ -252,26 +247,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             System.out.println("No Connection");
         }
-    }
-
-    private void readingPostEndAPPGEN() {
-        Random r = new Random();
-
-        int rSys = r.nextInt(20) + 100; // between 100 and 120
-        int rDia = r.nextInt(20) + 80; // between 80 and 100
-
-        Reading toReading = new Reading(rSys, rDia, new Date());
-        String toSend = GSON.toJson(toReading, Reading.class);
-
-        ReadingList rl = patient.getReadings();
-        rl.add(0, toReading);
-        patient.setReadings(rl);
-        complexPreferences.putObject("readingList", patient.getReadings());
-        complexPreferences.commit();
-        updateUIFields();
-
-        Post post = new Post();
-        post.execute(patient.getPrimaryCaregiverID(), toSend);
     }
 
     private void readingPostEndBLUGEN(String msg) {
@@ -329,13 +304,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendMessage(String data) {
         if (data.isEmpty()) return;
-
-        //if (hexMode && (data.length() % 2 == 1)) {
-        //    data = "0" + data;
-        //}
-        //byte[] command = (hexMode ? Utils.toHex(data) : data.getBytes());
         byte[] command = data.getBytes();
-        //if (command_ending != null) command = Utils.concat(command, command_ending.getBytes());
         if (isConnected()) {
             connector.write(command);
         }
@@ -404,11 +373,10 @@ public class MainActivity extends AppCompatActivity {
         client.disconnect();
     }
 
-    void appendLog(String message, boolean hexMode, boolean outgoing) {
+    void appendLog(String message, boolean outgoing) {
 
         StringBuilder msg = new StringBuilder();
 
-        //msg.append(hexMode ? Utils.printHex(message) : message);
         msg.append(message);
         if (outgoing) msg.append('\n');
         testTextView.append(msg);
@@ -449,7 +417,7 @@ public class MainActivity extends AppCompatActivity {
                     case MESSAGE_READ:
                         final String readMessage = (String) msg.obj;
                         if (readMessage != null) {
-                            activity.appendLog(readMessage, false, false);
+                            activity.appendLog(readMessage, false);
                             readingPostEndBLUGEN(readMessage);
                         }
                         break;

@@ -1,4 +1,4 @@
-package marc.example.com.rmcuffv1_patient;
+package marc.example.com.rmcuffv1_patient.BluetoothTools;
 
 import android.bluetooth.BluetoothDevice;
 import android.os.ParcelUuid;

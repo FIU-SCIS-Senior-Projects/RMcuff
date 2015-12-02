@@ -1,4 +1,4 @@
-package marc.example.com.rmcuffv1_patient;
+package marc.example.com.rmcuffv1_patient.Settings.Readings;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
