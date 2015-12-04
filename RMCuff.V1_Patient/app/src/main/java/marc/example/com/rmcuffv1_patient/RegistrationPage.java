@@ -30,6 +30,14 @@ public class RegistrationPage extends AppCompatActivity {
         complexPreferences = objectPreference.getComplexPreference();
     }
 
+    /*
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish() ;
+    }
+    */
+
     public void submitForm(View view) {
         EditText yourName = (EditText) findViewById(R.id.yourName);
         EditText yourPhone = (EditText) findViewById(R.id.yourPhone);
@@ -76,6 +84,8 @@ public class RegistrationPage extends AppCompatActivity {
     public void registrationComplete() {
         Intent mainActivity = new Intent(this, MainActivity.class);
         startActivity(mainActivity);
+
+        finish() ;
     }
 
     public boolean invalid(String phoneNum) {
@@ -106,5 +116,10 @@ public class RegistrationPage extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Disable back button by not calling super
+    @Override
+    public void onBackPressed() {
     }
 }

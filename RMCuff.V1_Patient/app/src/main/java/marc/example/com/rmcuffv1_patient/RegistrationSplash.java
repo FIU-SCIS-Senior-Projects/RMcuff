@@ -17,9 +17,25 @@ public class RegistrationSplash extends AppCompatActivity {
 
     public void register(View view)
     {
+        //finish() ;
         Intent registerPage = new Intent(this, RegistrationPage.class);
         startActivity(registerPage);
+
+        finish() ;
     }
+
+    /*
+    protected void onPause() {
+        finish() ;
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        finish() ;
+        super.onStop();
+    }
+    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -41,5 +57,10 @@ public class RegistrationSplash extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Disable back button by not calling super
+    @Override
+    public void onBackPressed() {
     }
 }

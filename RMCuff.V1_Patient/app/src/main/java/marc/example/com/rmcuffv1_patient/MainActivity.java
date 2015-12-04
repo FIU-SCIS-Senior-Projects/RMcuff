@@ -135,6 +135,14 @@ public class MainActivity extends AppCompatActivity {
         Pushbots.sharedInstance().setAlias(patient.getPatientID());
 
         updateUIFields();
+
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        if (mHandler == null) mHandler = new BluetoothResponseHandler(this);
+        else mHandler.setTarget(this);
+
+        checkBT();
+        connectBt();
     }
 
     public void clearAllData(View view) {
@@ -189,11 +197,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void register() {
-        //Intent registerPage = new Intent(this, RegistrationPage.class);
-        //startActivity(registerPage);
 
         Intent registerSplash = new Intent(this, RegistrationSplash.class);
         startActivity(registerSplash);
+        finish() ;
+        //Intent registerPage = new Intent(this, RegistrationPage.class);
+        //startActivity(registerPage);
     }
 
     public void makeCall(View view) {
@@ -439,5 +448,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    // Disable back button by not calling super
+    @Override
+    public void onBackPressed() {
     }
 }
