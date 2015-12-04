@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         Pushbots.sharedInstance().init(this);
         Pushbots.sharedInstance().setCustomHandler(CustomHandler.class);
@@ -115,8 +115,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void register()
     {
-        Intent registerPage = new Intent(this, RegistrationPage.class);
-        startActivity(registerPage);
+        //Intent registerPage = new Intent(this, RegistrationPage.class);
+        //startActivity(registerPage);
+        Intent registerSplash = new Intent(this, RegistrationSplash.class);
+        startActivity(registerSplash);
     }
 
     public void clearAllData(View view)
@@ -167,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
         ReadingList readings = pcg.getPatient().getReadings() ;
         if(readings.size() == 0 )
-            readingsAdapter.add("No readings taken ..") ;
+            readingsAdapter.add("No Readings have been taken ..") ;
 
         for (int i = 0; i < 3; i++)
         {
@@ -177,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        scheduleAdapter.add("No Readings have been Scheduled ..") ;
+        scheduleAdapter.add("No Readings have been scheduled ..") ;
         //scheduleAdapter.add("Time 2") ;
         //scheduleAdapter.add("Time 3") ;
 

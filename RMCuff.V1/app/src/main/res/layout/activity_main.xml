@@ -4,7 +4,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    android:background="@color/background_color">
+    android:background="@color/offwhite">
 
     <TextView android:text="Hello Patient"
         android:layout_width="wrap_content"
@@ -41,7 +41,10 @@
             android:text="Call"
             android:layout_alignParentRight="true"
             android:id="@+id/callButton"
-            android:onClick="makeCall" />
+            android:onClick="makeCall"
+            android:textStyle="bold"
+            android:textColor="@color/box_color"
+            android:background="@color/splash_color"/>
 
         <TextView android:text="Patient PhoneNum"
             android:layout_width="wrap_content"
@@ -65,16 +68,20 @@
             android:text="@string/caregivers"
             android:id="@+id/caregiversButton"
             android:onClick="startCaregivers"
-            android:background="@color/large_button"/>
+            android:textStyle="bold"
+            android:textColor="@color/box_color"
+            android:background="@color/splash_color"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Schedule a Reading"
+            android:textColor="@color/box_color"
             android:id="@+id/newScheduleButton"
+            android:textStyle="bold"
             android:onClick="setNewSchedule"
             android:layout_below="@+id/caregiversButton"
-            android:background="@color/large_button"
+            android:background="@color/green"
             android:layout_marginTop="10pt"
             />
     </RelativeLayout>
@@ -88,14 +95,14 @@
         android:layout_marginTop="5pt"
         android:background="@color/box_color">
 
-        <TextView android:text="Quick Glance"
+        <TextView android:text="Patient Data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/quickGlanceTitle"
             android:textStyle="bold"
             android:textColor="@color/title_text"/>
 
-        <TextView android:text="Next Reading"
+        <TextView android:text="Schedule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/scheduleListTitle"
@@ -112,7 +119,7 @@
             android:id="@+id/scheduleInfoList">
         </ListView>
 
-        <TextView android:text="Past Readings"
+        <TextView android:text="Past Blood Pressure Readings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/readingsListTitle"
@@ -137,11 +144,6 @@
         android:id="@+id/testButton"
         android:onClick="clearAllData"
         android:layout_below="@+id/quickGlance"
-        android:layout_marginTop="5pt"/>
-
-
-
-
-
+        android:layout_marginTop="20pt" />
 
 </RelativeLayout>

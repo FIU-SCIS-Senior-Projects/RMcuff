@@ -14,30 +14,37 @@
         android:layout_height="fill_parent">
     <TextView android:text="Select Date and Time, then press submit to send to patient" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:id="@+id/textView"
+        android:gravity="center" />
 
     <DatePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:id="@+id/datePicker"
         android:layout_below="@+id/textView"
+        android:layout_marginTop="15dp"
         android:theme="@style/AppTheme"
          />
 
     <TimePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:id="@+id/timePicker"
         android:layout_below="@+id/datePicker"
         />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send Schedule"
-        android:id="@+id/sendButton"
-        android:onClick="sendSchedule"
-        android:layout_below="@+id/timePicker"/>
     </RelativeLayout>
 </ScrollView>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send schedule to patient"
+        android:id="@+id/sendButton"
+        android:onClick="sendSchedule"
+        android:layout_alignParentBottom="true"
+        android:textStyle="bold"
+        android:textColor="@color/box_color"
+        android:background="@color/splash_color"/>
 </RelativeLayout>

@@ -25,7 +25,9 @@
         android:id="@+id/yourName"
         android:layout_below="@+id/yourInfo"
         android:hint="Enter your name"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:singleLine="true"
+        android:inputType="textPersonName" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -33,7 +35,9 @@
         android:id="@+id/yourPhone"
         android:layout_below="@+id/yourName"
         android:hint="Enter your phone number"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:singleLine="true"
+        android:phoneNumber="true" />
 
     <TextView android:text="No special characters. Ex: 7864445555"
         android:layout_width="wrap_content"
@@ -43,7 +47,7 @@
         android:layout_marginTop="5dp"/>
 
 
-    <TextView android:text="Your Care Provider's Info"
+    <TextView android:text="Your Patient's Info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/theirInfo"
@@ -57,16 +61,20 @@
         android:layout_height="wrap_content"
         android:id="@+id/theirName"
         android:layout_below="@+id/theirInfo"
-        android:hint="Enter Care Provider's name"
-        android:layout_marginTop="15dp" />
+        android:hint="Enter Patient's name"
+        android:layout_marginTop="15dp"
+        android:singleLine="true"
+        android:inputType="textPersonName" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/theirPhone"
         android:layout_below="@+id/theirName"
-        android:hint="Enter Care Provider's phone number"
-        android:layout_marginTop="15dp" />
+        android:hint="Enter Patient's phone number"
+        android:layout_marginTop="15dp"
+        android:singleLine="true"
+        android:phoneNumber="true" />
 
     <TextView android:text="No special characters. Ex: 7864445555"
         android:layout_width="wrap_content"
@@ -76,12 +84,14 @@
         android:layout_marginTop="5dp"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/submit"
         android:text="Update Info"
-        android:layout_below="@+id/phone_instruct_2"
-        android:layout_marginTop="10dp"
-        android:onClick="submitForm"/>
+        android:layout_alignParentBottom="true"
+        android:onClick="submitForm"
+        android:textStyle="bold"
+        android:textColor="@color/box_color"
+        android:background="@color/splash_color"/>
 
 </RelativeLayout>

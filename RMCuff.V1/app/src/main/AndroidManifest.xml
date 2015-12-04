@@ -34,7 +34,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleInstance" >
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.example.marc.rmcuffv1.MESSAGE" />
 
@@ -50,13 +51,15 @@
             android:name=".CaregiversPage"
             android:label="@string/title_activity_caregivers_page"
             android:launchMode="singleInstance"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".NewCaregiverPage"
             android:label="@string/title_activity_new_caregiver_page"
             android:launchMode="singleInstance"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait">
         </activity>
 
         <receiver
@@ -80,11 +83,18 @@
             android:name=".NewSchedulePage"
             android:label="@string/title_activity_new_schedule_page"
             android:launchMode="singleInstance"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".RegistrationPage"
-            android:label="@string/title_activity_registration_page" >
+            android:label="@string/title_activity_registration_page"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".RegistrationSplash"
+            android:label="@string/title_activity_registration_splash"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

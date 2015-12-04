@@ -11,7 +11,8 @@
         android:text="FIRSTNAME"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/title_text"/>
 
     <TextView android:id="@+id/lastName"
         android:layout_width="wrap_content"
@@ -20,7 +21,8 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/firstName"
         android:layout_toEndOf="@+id/firstName"
-        android:layout_marginLeft="6dp" />
+        android:layout_marginLeft="6dp"
+        android:textColor="@color/title_text"/>
 
     <TextView android:id="@+id/emailAddress"
         android:layout_width="wrap_content"
