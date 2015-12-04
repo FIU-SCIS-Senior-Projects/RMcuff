@@ -80,6 +80,8 @@ public class RegistrationPage extends AppCompatActivity {
     {
         Intent mainActivity = new Intent(this, MainActivity.class);
         startActivity(mainActivity);
+
+        finish() ;
     }
     public boolean invalid(String phoneNum)
     {

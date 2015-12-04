@@ -5,7 +5,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     android:paddingBottom="0dp"
-    android:background="@color/splash_color"
+    android:background="@color/splash_color_2"
     tools:context="marc.example.com.rmcuffv1_patient.RegistrationSplash">
 
     <RelativeLayout
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Continue"
-            android:textColor="@color/splash_color"
+            android:textColor="@color/splash_color_2"
             android:background="@color/box_color"
             android:layout_below="@id/desc"
             android:layout_marginTop="25dp"

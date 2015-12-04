@@ -19,6 +19,8 @@ public class RegistrationSplash extends AppCompatActivity {
     {
         Intent registerPage = new Intent(this, RegistrationPage.class);
         startActivity(registerPage);
+
+        finish() ;
     }
 
     @Override

@@ -2,16 +2,13 @@ package com.example.marc.rmcuffv1;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TimePicker;
 
 import com.google.gson.Gson;
@@ -23,8 +20,8 @@ public class NewSchedulePage  extends Activity {
     PrimaryCaregiver pcg = null ;
     private Gson GSON = new Gson();
 
-    private ObjectPreference pcgObjectPreference;
-    private ComplexPreferences pcgComplexPreferences;
+    private ObjectPreference objectPreference;
+    private ComplexPreferences complexPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +29,14 @@ public class NewSchedulePage  extends Activity {
         setContentView(R.layout.activity_new_schedule_page);
 
 
-        pcgObjectPreference = (ObjectPreference) this.getApplication();
-        pcgObjectPreference.createNewComplexFile("primaryCaregiver") ;
-        pcgComplexPreferences = pcgObjectPreference.getComplexPreference() ;
+        objectPreference = (ObjectPreference) this.getApplication();
+        objectPreference.createNewComplexFile("data") ;
+        complexPreferences = objectPreference.getComplexPreference() ;
 
-        if (pcgComplexPreferences != null)
+        if (complexPreferences != null)
         {
             System.out.println("$$$$$$*********\n");
-            pcg = pcgComplexPreferences.getObject("pcg", PrimaryCaregiver.class) ;
+            pcg = complexPreferences.getObject("pcg", PrimaryCaregiver.class) ;
         }
 
     }
@@ -74,12 +71,19 @@ public class NewSchedulePage  extends Activity {
 
             Post post = new Post() ;
             post.execute(pcg.getPatient().getPatientID(), toSend) ;
+
+            // Save to pref
+            pcg.getPatient().getScheduled().add(0, toSchedule) ;
+            complexPreferences.putObject("pcg", pcg) ;
+            complexPreferences.commit();
         }
         else
         {
             // display error
             System.out.println("No Connection") ;
         }
+
+        finish() ;
     }
 
     @Override

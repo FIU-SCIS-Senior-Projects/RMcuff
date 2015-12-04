@@ -23,7 +23,7 @@
         android:textSize="30dp"
         android:id="@+id/logo"/>
 
-    <TextView android:text="Welcome to the RMCuff Caregiver App. Please click through to register." android:layout_width="wrap_content"
+    <TextView android:text="Welcome to the RMCuff Caregiver App. This application will help you remotely monitor the blood pressure of a loved one easily and intuitively. Please click through to register." android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:textColor="#ffffff"

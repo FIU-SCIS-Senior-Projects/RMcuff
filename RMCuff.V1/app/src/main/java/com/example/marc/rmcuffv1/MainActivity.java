@@ -119,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
         //startActivity(registerPage);
         Intent registerSplash = new Intent(this, RegistrationSplash.class);
         startActivity(registerSplash);
+
+        finish() ;
     }
 
     public void clearAllData(View view)
@@ -179,7 +181,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        scheduleAdapter.add("No Readings have been scheduled ..") ;
+        ScheduleList schedule = pcg.getPatient().getScheduled() ;
+        if(schedule.size() == 0 )
+            scheduleAdapter.add("No Readings have been scheduled ..") ;
+
+        for (int i = 0; i < 3; i++)
+        {
+            if(schedule.size() > i)
+            {
+                scheduleAdapter.add(schedule.get(i).toString()) ;
+            }
+        }
         //scheduleAdapter.add("Time 2") ;
         //scheduleAdapter.add("Time 3") ;
 
