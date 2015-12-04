@@ -95,11 +95,13 @@
 
     <Button
         android:id="@+id/submit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/phone_instruct_2"
-        android:layout_marginTop="10dp"
         android:onClick="submitForm"
-        android:text="Update Info" />
+        android:layout_alignParentBottom="true"
+        android:text="Update Info"
+        android:textStyle="bold"
+        android:textColor="@color/box_color"
+        android:background="@color/splash_color"/>
 
 </RelativeLayout>

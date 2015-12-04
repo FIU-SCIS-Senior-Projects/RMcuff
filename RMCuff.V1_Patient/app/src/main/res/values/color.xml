@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background_color">#dfe7ef</color>
+    <color name="splash_color">#5ea3ef</color>
     <color name="box_color">#ffffff</color>
     <color name="title_text">#333333</color>
     <color name="subtitle_text">#666666</color>
     <color name="large_button">#56baec</color>
+    <color name="green">#2CE6AE</color>
+    <color name="offwhite">#ebf3fb</color>
+    <color name="light_grey">#eeeeee</color>
 </resources>

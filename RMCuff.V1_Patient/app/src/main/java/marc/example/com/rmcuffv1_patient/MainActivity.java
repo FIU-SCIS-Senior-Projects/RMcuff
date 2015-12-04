@@ -175,12 +175,12 @@ public class MainActivity extends AppCompatActivity {
         if (patient.getSchedule().size() > 0) {
             scheduleAdapter.add(patient.getSchedule().get(0).toString());
         } else {
-            scheduleAdapter.add("No readings have been scheduled ...");
+            scheduleAdapter.add("No Readings have been scheduled ..");
         }
 
         ReadingList readings = patient.getReadings();
         if (readings.size() == 0)
-            readingsAdapter.add("No readings have been taken ..");
+            readingsAdapter.add("No Readings have been taken ..");
         for (int i = 0; i < 3; i++) {
             if (readings.size() > i) {
                 readingsAdapter.add(readings.get(i).toString());
@@ -189,8 +189,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void register() {
-        Intent registerPage = new Intent(this, RegistrationPage.class);
-        startActivity(registerPage);
+        //Intent registerPage = new Intent(this, RegistrationPage.class);
+        //startActivity(registerPage);
+
+        Intent registerSplash = new Intent(this, RegistrationSplash.class);
+        startActivity(registerSplash);
     }
 
     public void makeCall(View view) {

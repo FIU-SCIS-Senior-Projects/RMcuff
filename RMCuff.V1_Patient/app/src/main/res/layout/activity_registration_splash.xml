@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    android:background="@color/splash_color"
+    tools:context="marc.example.com.rmcuffv1_patient.RegistrationSplash">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        >
+        <TextView android:text="RMCuff" android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffffff"
+            android:typeface="sans"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:id="@+id/logo"/>
+
+        <TextView android:text="Welcome to the RMCuff Patient App. This application, used alongside our bluetooth cuff, will help you and your primary caregiver accurately and easily track your blood pressure. Please click through to register." android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffffff"
+            android:typeface="sans"
+            android:id="@+id/desc"
+            android:layout_below="@id/logo"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_alignParentBottom="false"
+            android:gravity="center" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Continue"
+            android:textColor="@color/splash_color"
+            android:background="@color/box_color"
+            android:layout_below="@id/desc"
+            android:layout_marginTop="25dp"
+            android:layout_centerHorizontal="true"
+            android:onClick="register"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>
