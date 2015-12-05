@@ -1,4 +1,4 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.PushPull;
 
 /**
  * Created by Davidb on 10/22/15.
@@ -9,6 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.marc.rmcuffv1.Preferences.ComplexPreferences;
+import com.example.marc.rmcuffv1.Preferences.ObjectPreference;
+import com.example.marc.rmcuffv1.Settings.Reading.Reading;
+import com.example.marc.rmcuffv1.Settings.Reading.ReadingList;
 import com.google.gson.Gson;
 import com.pushbots.push.PBNotificationIntent;
 import com.pushbots.push.Pushbots;

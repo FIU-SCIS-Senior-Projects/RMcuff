@@ -1,9 +1,10 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.Caregiver;
 
 import android.telephony.SmsManager;
 
+import com.example.marc.rmcuffv1.Settings.Patient.MyPatient;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by Davidb on 10/8/15.
@@ -48,11 +49,12 @@ public class PrimaryCaregiver implements Serializable
         return primaryCaregiverID;
     }
 
-    public String getPrimaryCaregiverName() {
-        return name;
-    }
     public void setPrimaryCaregiverID(String primaryCaregiverID) {
         this.primaryCaregiverID = primaryCaregiverID;
+    }
+
+    public String getPrimaryCaregiverName() {
+        return name;
     }
 
     public void setPrimaryCaregiverName(String pcgName) {

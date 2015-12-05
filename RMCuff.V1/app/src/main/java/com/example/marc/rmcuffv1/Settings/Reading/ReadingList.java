@@ -1,4 +1,4 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.Settings.Reading;
 
 import java.util.ArrayList;
 

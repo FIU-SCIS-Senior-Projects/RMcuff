@@ -1,11 +1,9 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.Caregiver;
 
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.v7.app.ActionBarActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -14,22 +12,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import com.example.marc.rmcuffv1.Preferences.ComplexPreferences;
+import com.example.marc.rmcuffv1.Preferences.ObjectPreference;
+import com.example.marc.rmcuffv1.R;
+import com.example.marc.rmcuffv1.Settings.Reading.Reading;
 
 public class CaregiversPage extends Activity {
 
     private static final String LOG_TAG = CaregiversPage.class.getSimpleName();
+    PrimaryCaregiver pcg;
     private Intent newCaregiver;
     private ObjectPreference objectPreference;
     private ComplexPreferences complexPreferences;
-    PrimaryCaregiver pcg ;
-
     private ListView caregiverListView;
 
     @Override
@@ -155,6 +153,8 @@ public class CaregiversPage extends Activity {
             case R.id.edit:
                 o = caregiverListView.getItemAtPosition(info.position);
                 fullObject = (Caregiver) o;
+
+                fullObject.setUserID(info.position);
                 Intent mIntent = new Intent(this, NewCaregiverPage.class);
                 Bundle mBundle = new Bundle();
 
@@ -222,6 +222,13 @@ public class CaregiversPage extends Activity {
         } catch (NullPointerException e) {
             Log.d(LOG_TAG, "EMPTY LIST");
         }
+    }
+
+    // Disable back button by not calling super
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 
     /*

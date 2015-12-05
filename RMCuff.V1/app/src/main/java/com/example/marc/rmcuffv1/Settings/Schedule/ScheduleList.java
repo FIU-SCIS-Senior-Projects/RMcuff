@@ -1,4 +1,4 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.Settings.Schedule;
 
 /**
  * Created by Davidb on 11/19/15.

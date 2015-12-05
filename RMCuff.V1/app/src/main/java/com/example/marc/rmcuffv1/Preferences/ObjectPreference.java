@@ -1,11 +1,10 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.Preferences;
 
 /**
  * Created by Davidb on 9/23/15.
  */
 
 import android.app.Application;
-import android.content.Context;
 
 public class ObjectPreference extends Application {
     private static final String LOG_TAG = "ObjectPreference";
@@ -17,7 +16,7 @@ public class ObjectPreference extends Application {
     }
 
     public void createNewComplexFile(String fileName) {
-        complexPrefenreces = complexPrefenreces.getComplexPreferences(getBaseContext(), fileName, MODE_PRIVATE);
+        complexPrefenreces = ComplexPreferences.getComplexPreferences(getBaseContext(), fileName, MODE_PRIVATE);
         android.util.Log.i(LOG_TAG, "PREFERENCE LOADED: " + fileName);
     }
 

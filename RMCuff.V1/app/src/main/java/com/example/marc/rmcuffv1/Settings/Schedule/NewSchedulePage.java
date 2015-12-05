@@ -1,4 +1,4 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.Settings.Schedule;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,11 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import com.example.marc.rmcuffv1.Caregiver.PrimaryCaregiver;
+import com.example.marc.rmcuffv1.Preferences.ComplexPreferences;
+import com.example.marc.rmcuffv1.Preferences.ObjectPreference;
+import com.example.marc.rmcuffv1.PushPull.Post;
+import com.example.marc.rmcuffv1.R;
 import com.google.gson.Gson;
 
 import java.util.Date;
@@ -106,5 +111,11 @@ public class NewSchedulePage  extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Disable back button by not calling super
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

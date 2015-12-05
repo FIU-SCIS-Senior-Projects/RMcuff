@@ -1,4 +1,4 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.Caregiver;
 
 import java.util.ArrayList;
 

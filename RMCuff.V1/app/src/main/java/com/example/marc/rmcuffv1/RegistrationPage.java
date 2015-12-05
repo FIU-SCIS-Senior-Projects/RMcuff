@@ -2,13 +2,21 @@ package com.example.marc.rmcuffv1;
 
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.marc.rmcuffv1.Caregiver.CaregiverList;
+import com.example.marc.rmcuffv1.Caregiver.PrimaryCaregiver;
+import com.example.marc.rmcuffv1.Preferences.ComplexPreferences;
+import com.example.marc.rmcuffv1.Preferences.ObjectPreference;
+import com.example.marc.rmcuffv1.Settings.Patient.MyPatient;
+import com.example.marc.rmcuffv1.Settings.Reading.ReadingList;
+import com.example.marc.rmcuffv1.Settings.Schedule.ScheduleList;
 
 public class RegistrationPage extends AppCompatActivity {
 
@@ -85,25 +93,17 @@ public class RegistrationPage extends AppCompatActivity {
     }
     public boolean invalid(String phoneNum)
     {
-        if(phoneNum.length() != 10 || !TextUtils.isDigitsOnly(phoneNum))
-        {
-            return true ;
-        }
-        return false ;
+        return phoneNum.length() != 10 || !TextUtils.isDigitsOnly(phoneNum);
     }
     public boolean empty(String s)
     {
-        if (TextUtils.isEmpty(s))
-        {
-            return true ;
-        }
-        return false ;
+        return TextUtils.isEmpty(s);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_registration_page, menu);
+        //getMenuInflater().inflate(R.menu.menu_registration_page, menu);
         return true;
     }
 
@@ -120,5 +120,11 @@ public class RegistrationPage extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Disable back button by not calling super
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

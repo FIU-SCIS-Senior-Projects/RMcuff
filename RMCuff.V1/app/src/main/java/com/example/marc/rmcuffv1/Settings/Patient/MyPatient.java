@@ -1,8 +1,7 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.Settings.Patient;
 
-import android.telephony.SmsManager;
-import java.util.Date ;
-
+import com.example.marc.rmcuffv1.Settings.Reading.ReadingList;
+import com.example.marc.rmcuffv1.Settings.Schedule.ScheduleList;
 
 
 /**
@@ -34,27 +33,31 @@ public class MyPatient
     // Get Methods
     public String getPatientID() {return patientID;}
 
+    public void setPatientID(String patientID) {
+        this.patientID = patientID;
+    }
+
     public String getName() {
         return name;
     }
-
-    public ReadingList getReadings() {return readings;}
-
-    public ScheduleList getScheduled() {
-        return scheduled;
-    }
-
-
-    // Set methods
-
-    public void setPatientID(String patientID) {this.patientID = patientID;}
 
     public void setName(String name) {
         this.name = name;
     }
 
+
+    // Set methods
+
+    public ReadingList getReadings() {
+        return readings;
+    }
+
     public void setReadings(ReadingList readings) {
         this.readings = readings;
+    }
+
+    public ScheduleList getScheduled() {
+        return scheduled;
     }
 
     public void setScheduled(ScheduleList scheduled) {this.scheduled = scheduled;}

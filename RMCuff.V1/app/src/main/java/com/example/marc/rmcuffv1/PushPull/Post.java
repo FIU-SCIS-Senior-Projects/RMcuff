@@ -1,4 +1,4 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.PushPull;
 
 /**
  * Created by Davidb on 10/13/15.
@@ -6,12 +6,12 @@ package com.example.marc.rmcuffv1;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -39,8 +39,7 @@ public class Post extends AsyncTask<String, Void, Void>
         return null ;
     }
 
-    public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException
-    {
+    public String readIt(InputStream stream, int len) throws IOException {
         Reader reader = null;
         reader = new InputStreamReader(stream, "UTF-8");
         char[] buffer = new char[len];

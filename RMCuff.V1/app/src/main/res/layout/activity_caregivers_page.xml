@@ -1,47 +1,48 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/offwhite"
+    android:descendantFocusability="blocksDescendants"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
-    android:paddingTop="0dp"
-    android:descendantFocusability="blocksDescendants"
-    android:background="@color/offwhite">
+    android:paddingTop="0dp">
 
     <ListView
+        android:id="@+id/caregiverListView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        android:id="@+id/caregiverListView"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/caregiversButtonSection"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp" />
 
     <RelativeLayout
+        android:id="@+id/caregiversButtonSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/caregiversButtonSection"
         android:layout_alignParentBottom="true"
         android:padding="10dp">
 
         <Button
+            android:id="@+id/addCaregiverButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/newCaregivers"
-            android:id="@+id/addCaregiverButton"
+            android:background="@color/splash_color"
             android:onClick="addCaregiver"
-            android:textStyle="bold"
+            android:text="@string/newCaregivers"
             android:textColor="@color/box_color"
-            android:background="@color/splash_color"/>
+            android:textStyle="bold" />
 
         <Button
+            android:id="@+id/sendMessageButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/addCaregiverButton"
             android:layout_marginTop="10pt"
-            android:text="Send Text Report"
-            android:id="@+id/sendMessageButton"
+            android:background="@color/green"
             android:onClick="sendTextMessage"
-            android:textStyle="bold"
+            android:text="Send Text Report"
             android:textColor="@color/box_color"
-            android:background="@color/green"/>
+            android:textStyle="bold" />
 
     </RelativeLayout>
 </RelativeLayout>

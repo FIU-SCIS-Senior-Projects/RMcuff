@@ -1,4 +1,4 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.Preferences;
 
 /**
  * Created by Davidb on 9/23/15.
@@ -8,9 +8,6 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 
 public class ComplexPreferences {
 

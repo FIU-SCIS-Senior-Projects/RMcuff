@@ -26,7 +26,7 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
-        android:name=".ObjectPreference"
+        android:name=".Preferences.ObjectPreference"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -48,18 +48,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CaregiversPage"
+            android:name=".Caregiver.CaregiversPage"
             android:label="@string/title_activity_caregivers_page"
             android:launchMode="singleInstance"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-            android:name=".NewCaregiverPage"
+            android:name=".Caregiver.NewCaregiverPage"
             android:label="@string/title_activity_new_caregiver_page"
             android:launchMode="singleInstance"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
         </activity>
 
         <receiver
@@ -75,16 +75,16 @@
                 <category android:name="com.example.marc.rmcuffv1" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".CustomHandler" />
+        <receiver android:name=".PushPull.CustomHandler" />
 
         <service android:name="com.pushbots.push.GCMIntentService" />
 
         <activity
-            android:name=".NewSchedulePage"
+            android:name=".Settings.Schedule.NewSchedulePage"
             android:label="@string/title_activity_new_schedule_page"
             android:launchMode="singleInstance"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".RegistrationPage"

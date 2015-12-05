@@ -1,8 +1,8 @@
 package com.example.marc.rmcuffv1;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,5 +43,10 @@ public class RegistrationSplash extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Disable back button by not calling super
+    @Override
+    public void onBackPressed() {
     }
 }

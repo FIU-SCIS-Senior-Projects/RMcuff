@@ -1,149 +1,161 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/offwhite"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
-    android:paddingTop="0dp"
-    android:background="@color/offwhite">
+    android:paddingTop="0dp">
 
-    <TextView android:text="Hello Patient"
+    <TextView
+        android:id="@+id/pcgNameField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/pcgNameField"
-        android:textStyle="bold"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:text="Hello Patient"
+        android:textStyle="bold" />
 
     <RelativeLayout
+        android:id="@+id/patientInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/patientInfo"
         android:layout_below="@+id/pcgNameField"
         android:layout_marginTop="5pt"
-        android:padding="10dp"
-        android:background="@color/box_color">
+        android:background="@color/box_color"
+        android:padding="10dp">
 
-        <TextView android:text="Patient Info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <TextView
             android:id="@+id/patientInfoTitle"
-            android:textStyle="bold"
-            android:textColor="@color/title_text"/>
-
-        <TextView android:text="Patient Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Patient Info"
+            android:textColor="@color/title_text"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/patientNameField"
-            android:layout_below="@+id/patientInfoTitle"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patientInfoTitle"
+            android:text="Patient Name" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Call"
-            android:layout_alignParentRight="true"
             android:id="@+id/callButton"
-            android:onClick="makeCall"
-            android:textStyle="bold"
-            android:textColor="@color/box_color"
-            android:background="@color/splash_color"/>
-
-        <TextView android:text="Patient PhoneNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2pt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@color/splash_color"
+            android:onClick="makeCall"
+            android:text="Call"
+            android:textColor="@color/box_color"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/patientPhoneField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/patientNameField"
-            android:id="@+id/patientPhoneField"/>
+            android:layout_marginTop="2pt"
+            android:text="Patient PhoneNum" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/buttonSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonSection"
         android:layout_below="@+id/patientInfo"
         android:layout_marginTop="5pt"
         android:padding="10dp">
 
         <Button
+            android:id="@+id/caregiversButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/caregivers"
-            android:id="@+id/caregiversButton"
+            android:background="@color/splash_color"
             android:onClick="startCaregivers"
-            android:textStyle="bold"
+            android:text="@string/caregivers"
             android:textColor="@color/box_color"
-            android:background="@color/splash_color"/>
+            android:textStyle="bold" />
 
         <Button
+            android:id="@+id/newScheduleButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/caregiversButton"
+            android:layout_marginTop="10pt"
+            android:background="@color/green"
+            android:onClick="setNewSchedule"
             android:text="Schedule a Reading"
             android:textColor="@color/box_color"
-            android:id="@+id/newScheduleButton"
             android:textStyle="bold"
-            android:onClick="setNewSchedule"
-            android:layout_below="@+id/caregiversButton"
-            android:background="@color/green"
-            android:layout_marginTop="10pt"
             />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
         android:id="@+id/quickGlance"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/buttonSection"
         android:layout_marginTop="5pt"
-        android:background="@color/box_color">
+        android:background="@color/box_color"
+        android:padding="10dp">
 
-        <TextView android:text="Patient Data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <TextView
             android:id="@+id/quickGlanceTitle"
-            android:textStyle="bold"
-            android:textColor="@color/title_text"/>
-
-        <TextView android:text="Schedule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Patient Data"
+            android:textColor="@color/title_text"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/scheduleListTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/quickGlanceTitle"
-            android:textStyle="bold"
             android:layout_marginTop="2pt"
-            android:textColor="@color/subtitle_text"/>
+            android:text="Schedule"
+            android:textColor="@color/subtitle_text"
+            android:textStyle="bold" />
 
         <ListView
+            android:id="@+id/scheduleInfoList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/readingsListTitle"
             android:layout_below="@+id/scheduleListTitle"
             android:layout_marginTop="2pt"
-            android:id="@+id/scheduleInfoList">
+            android:scrollingCache="false">
         </ListView>
 
-        <TextView android:text="Past Blood Pressure Readings"
+        <TextView
+            android:id="@+id/readingsListTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/readingsListTitle"
-            android:layout_below="@+id/scheduleInfoList"
-            android:textStyle="bold"
-            android:textColor="@color/subtitle_text"/>
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="Past Blood Pressure Readings"
+            android:textColor="@color/subtitle_text"
+            android:textStyle="bold" />
 
         <ListView
+            android:id="@+id/readingsInfoList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/readingsListTitle"
-            android:layout_marginTop="2pt"
-            android:id="@+id/readingsInfoList">
+            android:layout_below="@+id/readingsListTitle">
         </ListView>
 
     </RelativeLayout>
 
     <Button
+        android:id="@+id/testButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Clear Data (testing)"
-        android:id="@+id/testButton"
-        android:onClick="clearAllData"
         android:layout_below="@+id/quickGlance"
-        android:layout_marginTop="20pt" />
+        android:layout_marginTop="20pt"
+        android:onClick="clearAllData"
+        android:text="Clear Data (testing)"
+        android:visibility="gone" />
 
 </RelativeLayout>

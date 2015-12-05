@@ -121,5 +121,6 @@ public class RegistrationPage extends AppCompatActivity {
     // Disable back button by not calling super
     @Override
     public void onBackPressed() {
+        finish();
     }
 }

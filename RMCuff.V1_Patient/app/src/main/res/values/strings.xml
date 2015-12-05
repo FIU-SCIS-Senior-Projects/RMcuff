@@ -2,7 +2,7 @@
     <string name="app_name">RMCuff Patient</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Clear Data</string>
     <string name="title_activity_registration_page">RegistrationPage</string>
     <string name="title_activity_registration_splash">RegistrationSplash</string>
 </resources>

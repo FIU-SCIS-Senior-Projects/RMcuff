@@ -1,4 +1,4 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.Caregiver;
 
 /**
  * Created by Davidb on 9/23/15.
@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import com.example.marc.rmcuffv1.R;
+
 import java.util.ArrayList;
 
 

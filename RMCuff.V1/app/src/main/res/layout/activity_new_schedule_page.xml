@@ -1,10 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.marc.rmcuffv1.NewSchedulePage">
+    tools:context=".Settings.Schedule.NewSchedulePage">
 <ScrollView
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -12,39 +13,42 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-    <TextView android:text="Select Date and Time, then press submit to send to patient" android:layout_width="wrap_content"
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:gravity="center" />
+            android:gravity="center"
+            android:text="Select Date and Time, then press submit to send to patient" />
 
     <DatePicker
+        android:id="@+id/datePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/datePicker"
         android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:theme="@style/AppTheme"
          />
 
     <TimePicker
+        android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/timePicker"
         android:layout_below="@+id/datePicker"
+        android:layout_centerHorizontal="true"
         />
 
     </RelativeLayout>
 </ScrollView>
     <Button
+        android:id="@+id/sendButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send schedule to patient"
-        android:id="@+id/sendButton"
-        android:onClick="sendSchedule"
         android:layout_alignParentBottom="true"
-        android:textStyle="bold"
+        android:background="@color/splash_color"
+        android:onClick="sendSchedule"
+        android:text="Send schedule to patient"
         android:textColor="@color/box_color"
-        android:background="@color/splash_color"/>
+        android:textStyle="bold" />
 </RelativeLayout>

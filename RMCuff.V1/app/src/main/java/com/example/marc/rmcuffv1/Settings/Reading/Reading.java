@@ -1,6 +1,5 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.Settings.Reading;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -47,29 +46,30 @@ public class Reading
         return systolic;
     }
 
-    public int getDiastolic() {
-        return diastolic;
-    }
-    public String getReadingRating() {
-        return readingRating;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    // Set methods
-
     public void setSystolic(int systolic) {
         this.systolic = systolic;
+    }
+
+    public int getDiastolic() {
+        return diastolic;
     }
 
     public void setDiastolic(int diastolic) {
         this.diastolic = diastolic;
     }
 
+    // Set methods
+
+    public String getReadingRating() {
+        return readingRating;
+    }
+
     public void setReadingRating(String readingRating) {
         this.readingRating = readingRating ;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public void setDate(Date date) {

@@ -1,10 +1,8 @@
-package com.example.marc.rmcuffv1;
+package com.example.marc.rmcuffv1.Caregiver;
 
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.marc.rmcuffv1.Preferences.ComplexPreferences;
+import com.example.marc.rmcuffv1.Preferences.ObjectPreference;
+import com.example.marc.rmcuffv1.R;
 
 public class NewCaregiverPage extends Activity {
 
@@ -23,6 +25,7 @@ public class NewCaregiverPage extends Activity {
 
     private EditText firstName, lastName, emailAddress, phoneNumber;
     private Button confirmButton;
+    private boolean edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class NewCaregiverPage extends Activity {
 
             confirmButton = (Button) findViewById(R.id.addCaregiverButton);
             confirmButton.setText("EDIT");
+            edit = true;
 
             editCaregiver(caregiver);
         } else {
@@ -86,6 +90,7 @@ public class NewCaregiverPage extends Activity {
 
     public void createNewCaregiver(View view) {
         createNewCaregiver();
+        finish();
     }
 
     private void createNewCaregiver() {
@@ -100,7 +105,7 @@ public class NewCaregiverPage extends Activity {
             caregiver.setEmailAddress(emailAddress.getText().toString());
             caregiver.setPhoneNum(phoneNumber.getText().toString());
 
-            if (caregiver.getUserID() != -1) {
+            if (edit) {
                 saveToComplexPreferences();
 
                 setCaregiverStatus("Caregiver Edited!");
@@ -161,7 +166,10 @@ public class NewCaregiverPage extends Activity {
             CaregiverList cgl = complexPreferences.getObject("caregiverList", CaregiverList.class) ;
             if (cgl == null) cgl = new CaregiverList() ;
 
-            cgl.add(0, caregiver) ;
+            if (!edit)
+                cgl.add(0, caregiver);
+            else
+                cgl.replace(caregiver.getUserID(), caregiver);
 
             //complexPreferences.putObject(String.valueOf(caregiver.getUserID()), caregiver);
             complexPreferences.putObject("caregiverList", cgl);
@@ -173,5 +181,11 @@ public class NewCaregiverPage extends Activity {
         } else {
             Log.d(LOG_TAG, "ERROR WRITTING COMPLEXPREF");
         }
+    }
+
+    // Disable back button by not calling super
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

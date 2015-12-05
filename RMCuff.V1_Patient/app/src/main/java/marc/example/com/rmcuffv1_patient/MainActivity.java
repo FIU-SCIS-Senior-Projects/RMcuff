@@ -146,6 +146,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearAllData(View view) {
+        clearAllData();
+    }
+
+    private void clearAllData() {
         complexPreferences.removeObject("patient");
         complexPreferences.commit();
 
@@ -343,7 +347,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
+        if (id == R.id.action_settings) {
+            clearAllData();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -453,5 +462,6 @@ public class MainActivity extends AppCompatActivity {
     // Disable back button by not calling super
     @Override
     public void onBackPressed() {
+        finish();
     }
 }

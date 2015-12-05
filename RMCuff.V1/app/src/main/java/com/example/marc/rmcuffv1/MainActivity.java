@@ -1,16 +1,11 @@
 package com.example.marc.rmcuffv1;
 
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.SmsManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,11 +14,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.marc.rmcuffv1.Caregiver.CaregiverList;
+import com.example.marc.rmcuffv1.Caregiver.CaregiversPage;
+import com.example.marc.rmcuffv1.Caregiver.PrimaryCaregiver;
+import com.example.marc.rmcuffv1.Preferences.ComplexPreferences;
+import com.example.marc.rmcuffv1.Preferences.ObjectPreference;
+import com.example.marc.rmcuffv1.PushPull.CustomHandler;
+import com.example.marc.rmcuffv1.Settings.Reading.ReadingList;
+import com.example.marc.rmcuffv1.Settings.Schedule.NewSchedulePage;
+import com.example.marc.rmcuffv1.Settings.Schedule.ScheduleList;
 import com.google.gson.Gson;
 import com.pushbots.push.Pushbots;
-
-import java.util.ArrayList;
-import java.util.Date ;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -113,8 +114,7 @@ public class MainActivity extends AppCompatActivity {
         updateUIFields() ;
     }
 
-    private void register()
-    {
+    private void register() {
         //Intent registerPage = new Intent(this, RegistrationPage.class);
         //startActivity(registerPage);
         Intent registerSplash = new Intent(this, RegistrationSplash.class);
@@ -123,10 +123,13 @@ public class MainActivity extends AppCompatActivity {
         finish() ;
     }
 
-    public void clearAllData(View view)
-    {
-        CaregiverList caregiverResults = new CaregiverList() ;
-        ReadingList readings = new ReadingList() ;
+    public void clearAllData(View view) {
+        clearAllData();
+    }
+
+    private void clearAllData() {
+        CaregiverList caregiverResults = new CaregiverList();
+        ReadingList readings = new ReadingList();
 
         complexPreferences.removeObject("caregiverList");
         complexPreferences.commit();
@@ -137,11 +140,11 @@ public class MainActivity extends AppCompatActivity {
         complexPreferences.removeObject("pcg");
         complexPreferences.commit();
 
-        pcg = null ;
-        register() ;
+        pcg = null;
+        register();
     }
 
-    public void updateUIFields()
+    private void updateUIFields()
     {
         // Imports
         TextView pcgWelcome = (TextView) findViewById(R.id.pcgNameField) ;
@@ -173,29 +176,21 @@ public class MainActivity extends AppCompatActivity {
         if(readings.size() == 0 )
             readingsAdapter.add("No Readings have been taken ..") ;
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < readings.size(); i++)
         {
-            if(readings.size() > i)
-            {
-                readingsAdapter.add(readings.get(i).toString()) ;
-            }
+            readingsAdapter.add(readings.get(i).toString());
         }
 
         ScheduleList schedule = pcg.getPatient().getScheduled() ;
         if(schedule.size() == 0 )
             scheduleAdapter.add("No Readings have been scheduled ..") ;
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < schedule.size(); i++)
         {
-            if(schedule.size() > i)
-            {
-                scheduleAdapter.add(schedule.get(i).toString()) ;
-            }
+            scheduleAdapter.add(schedule.get(i).toString());
         }
         //scheduleAdapter.add("Time 2") ;
         //scheduleAdapter.add("Time 3") ;
-
-
     }
 
     @Override
@@ -209,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            clearAllData();
             return true;
         }
 
@@ -275,8 +271,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void makeCall(View view) { makePhoneCall(); }
 
-    public void makePhoneCall()
-    {
+    private void makePhoneCall() {
         System.out.println("##########7") ;
 
         //TelephonyManager tm= (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
@@ -299,6 +294,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Could not make call " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
+    }
 
+    // Disable back button by not calling super
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }
