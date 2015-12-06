@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private static BluetoothResponseHandler mHandler;
     private static String address = "20:15:07:27:55:76";
 
-    TextView testTextView;
+    //TextView testTextView;
 
     private Patient patient;
     private Gson GSON = new Gson();
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         if (readings == null)
             readings = new ReadingList();
 
-        testTextView = (TextView) findViewById(R.id.testTextView);
+        //testTextView = (TextView) findViewById(R.id.testTextView);
 
         // LOAD ALL STORED DATA
         if (patient != null) {
@@ -141,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
         if (mHandler == null) mHandler = new BluetoothResponseHandler(this);
         else mHandler.setTarget(this);
 
-        checkBT();
-        connectBt();
+        //checkBT();
+        //connectBt();
     }
 
     public void clearAllData(View view) {
@@ -193,10 +193,8 @@ public class MainActivity extends AppCompatActivity {
         ReadingList readings = patient.getReadings();
         if (readings.size() == 0)
             readingsAdapter.add("No Readings have been taken ..");
-        for (int i = 0; i < 3; i++) {
-            if (readings.size() > i) {
-                readingsAdapter.add(readings.get(i).toString());
-            }
+        for (int i = 0; i < readings.size(); i++) {
+            readingsAdapter.add(readings.get(i).toString());
         }
     }
 
@@ -246,7 +244,10 @@ public class MainActivity extends AppCompatActivity {
                 bluetoothReadingPost();
             } else {
                 Toast.makeText(getApplicationContext(), "Could not connect to Bluetooth\nPlease try again.", Toast.LENGTH_SHORT).show();
-                if (btRetry++ < 1) {
+
+                checkBT();
+                connectBt();
+                /*if (btRetry++ < 1) {
                     checkBT();
                     connectBt();
                 } else {
@@ -259,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     retryCounter = 0;
                 }
+                */
             }
         } else {
             System.out.println("No Connection");
@@ -288,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void bluetoothReadingPost() {
-        testTextView.setText("");
+        //testTextView.setText("");
         sendMessage("0");
     }
 
@@ -400,7 +402,7 @@ public class MainActivity extends AppCompatActivity {
 
         msg.append(message);
         if (outgoing) msg.append('\n');
-        testTextView.append(msg);
+        //testTextView.append(msg);
 
         Log.d(LOG_TAG, "TEST MESSAGE: " + msg);
     }
@@ -439,7 +441,7 @@ public class MainActivity extends AppCompatActivity {
                         final String readMessage = (String) msg.obj;
                         if (readMessage != null) {
                             activity.appendLog(readMessage, false);
-                            readingPostEndBLUGEN(readMessage);
+                            readingPostEndBLUGEN(readMessage.toString());
                         }
                         break;
 

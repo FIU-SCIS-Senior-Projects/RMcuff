@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:onClick="submitForm"
         android:layout_alignParentBottom="true"
-        android:text="Update Info"
+        android:text="Register"
         android:textStyle="bold"
         android:textColor="@color/box_color"
         android:background="@color/splash_color"/>
