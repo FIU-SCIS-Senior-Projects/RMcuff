@@ -17,25 +17,13 @@ public class RegistrationSplash extends AppCompatActivity {
 
     public void register(View view)
     {
-        //finish() ;
+       // Send user to the actual registration page once they click through
         Intent registerPage = new Intent(this, RegistrationPage.class);
         startActivity(registerPage);
 
+        // End this activity
         finish() ;
     }
-
-    /*
-    protected void onPause() {
-        finish() ;
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        finish() ;
-        super.onStop();
-    }
-    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -70,9 +70,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // set up pushbots push notification system instance
         Pushbots.sharedInstance().init(this);
         Pushbots.sharedInstance().setCustomHandler(CustomHandler.class);
 
+        // get phone data
         objectPreference = (ObjectPreference) this.getApplication();
         objectPreference.createNewComplexFile("data");
         complexPreferences = objectPreference.getComplexPreference();
@@ -81,41 +83,44 @@ public class MainActivity extends AppCompatActivity {
         ReadingList readings = null;
         patient = null;
 
+        // if phone data found
         if (complexPreferences != null) {
-            //complexPreferences.putObject("scheduleList", new ScheduleList()) ;
-            //complexPreferences.putObject("readingList", new ReadingList()) ;
-            //complexPreferences.commit() ;
+            // set objects from phone data
             schedule = complexPreferences.getObject("scheduleList", ScheduleList.class);
             readings = complexPreferences.getObject("readingList", ReadingList.class);
             patient = complexPreferences.getObject("patient", Patient.class);
         }
 
-        if (patient == null)
+        if (patient == null) // if not registered yet
             register();
         if (schedule == null)
             schedule = new ScheduleList();
         if (readings == null)
             readings = new ReadingList();
 
-        //testTextView = (TextView) findViewById(R.id.testTextView);
 
-        // LOAD ALL STORED DATA
+        // If registered, store all the latest data into the object
         if (patient != null) {
             patient.setReadings(readings);
             patient.setSchedule(schedule);
             complexPreferences.putObject("patient", patient);
             complexPreferences.commit();
 
+            // set up unique push notification key using phone number
             Pushbots.sharedInstance().setAlias(patient.getPatientID());
 
+            // update UI
             updateUIFields();
         }
 
+        // set up google api, for bluetooth
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
+        // set up bluetooth handler
         if (mHandler == null) mHandler = new BluetoothResponseHandler(this);
         else mHandler.setTarget(this);
 
+        // set up bluetooth
         checkBT();
         connectBt();
     }
@@ -124,11 +129,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
 
-        System.out.println("+++++ Restart");
+        // when app is opened from pause
 
+        // set up objects again
         patient = complexPreferences.getObject("patient", Patient.class);
 
-        if (patient == null)
+        if (patient == null) // if not registered
             register();
 
         // Set pushbots data again
@@ -150,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearAllData() {
+        // clear phone data for app
         complexPreferences.removeObject("patient");
         complexPreferences.commit();
 
@@ -160,14 +167,16 @@ public class MainActivity extends AppCompatActivity {
         complexPreferences.commit();
 
         patient = null;
-        register();
+        register(); // user must now register again
     }
 
     public void updateUIFields() {
+        // link layout fields
         TextView patientWelcome = (TextView) findViewById(R.id.patientNameField);
         TextView pcgName = (TextView) findViewById(R.id.pcgNameField);
         TextView pcgPhone = (TextView) findViewById(R.id.pcgPhoneField);
 
+        // set up array adapters and lists
         ArrayAdapter<String> readingsAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1);
 
@@ -180,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
         ListView scheduleList = (ListView) findViewById(R.id.scheduleInfoList);
         scheduleList.setAdapter(scheduleAdapter);
 
+        // Input user data into layout
         patientWelcome.setText("Welcome, " + patient.getName() + "!");
         pcgName.setText(patient.getPrimaryCaregiverName());
         pcgPhone.setText(patient.getPrimaryCaregiverID());
@@ -199,12 +209,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void register() {
-
+    // send user to registration page
         Intent registerSplash = new Intent(this, RegistrationSplash.class);
         startActivity(registerSplash);
         finish() ;
-        //Intent registerPage = new Intent(this, RegistrationPage.class);
-        //startActivity(registerPage);
     }
 
     public void makeCall(View view) {
@@ -212,12 +220,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void makePhoneCall() {
+        // phone call shortcut button pressed
         PackageManager pm = getPackageManager();
 
+        // if the user has no calling feature
         if (!pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
             Toast.makeText(getApplicationContext(), "Calling Unavailable", Toast.LENGTH_LONG).show();
         } else {
+            // user can make a call
             try {
+                // make a phone call intent to cg phone number
                 Uri number = Uri.parse("tel:" + patient.getPrimaryCaregiverID());
                 Intent intent = new Intent(Intent.ACTION_CALL, number);
                 try {
@@ -236,12 +248,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void readingPostStart() {
+        // get connectivity info
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
+        // check if bluetooth is available
         if (networkInfo != null && networkInfo.isConnected()) {
             if (connector.getState() == 2) {
-                bluetoothReadingPost();
+                bluetoothReadingPost(); // take a reading, user is connected to bt device
             } else {
                 Toast.makeText(getApplicationContext(), "Could not connect to Bluetooth\nPlease try again.", Toast.LENGTH_SHORT).show();
 
@@ -270,21 +284,28 @@ public class MainActivity extends AppCompatActivity {
     private void readingPostEndBLUGEN(String msg) {
         Log.d(LOG_TAG, msg);
 
+        // string array for response
         String[] bluResponseSplit = msg.split("\\.");
 
+        // sys and dia blood pressure reading
         int rSys = Integer.parseInt(bluResponseSplit[0]);
         int rDia = Integer.parseInt(bluResponseSplit[1].trim());
 
+        // create new reading object and prepare to send to CG
         Reading toReading = new Reading(rSys, rDia, new Date());
         String toSend = GSON.toJson(toReading, Reading.class);
 
+        // save reading to phone data
         ReadingList rl = patient.getReadings();
         rl.add(0, toReading);
         patient.setReadings(rl);
         complexPreferences.putObject("readingList", patient.getReadings());
         complexPreferences.commit();
+
+        // update UI
         updateUIFields();
 
+        // submit reading to CG
         Post post = new Post();
         post.execute(patient.getPrimaryCaregiverID(), toSend);
     }
@@ -295,11 +316,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkBT() {
+        // get BT adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
+        // if not enabled
         if (!mBluetoothAdapter.isEnabled()) {
             Toast.makeText(getApplicationContext(), "Bluetooth Disabled", Toast.LENGTH_SHORT).show();
 
+            // request enable
             Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBluetooth, 0);
         }
@@ -310,29 +334,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void connectBt() {
+        // attempt connection to device
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         Log.d(LOG_TAG, "Connecting to ... " + device);
+        // stop trying to discover new devices
         mBluetoothAdapter.cancelDiscovery();
         stopConnection();
 
+        // set up connection
         DeviceData data = new DeviceData(device, "HC-06");
         connector = new DeviceConnector(data, mHandler);
         connector.connect();
     }
 
     private void sendMessage(String data) {
+        // if no data to send, return
         if (data.isEmpty()) return;
         byte[] command = data.getBytes();
         if (isConnected()) {
-            connector.write(command);
+            connector.write(command); // send data
         }
     }
 
     private boolean isConnected() {
+        // return if device is connected
         return (connector != null) && (connector.getState() == DeviceConnector.STATE_CONNECTED);
     }
 
     private void stopConnection() {
+        // stop the connection
         if (connector != null) {
             connector.stop();
             connector = null;
@@ -408,6 +438,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class BluetoothResponseHandler extends Handler {
+        // set up handler for response from BT device
         private WeakReference<MainActivity> mActivity;
 
         public BluetoothResponseHandler(MainActivity activity) {
@@ -424,6 +455,7 @@ public class MainActivity extends AppCompatActivity {
             MainActivity activity = mActivity.get();
             if (activity != null) {
                 switch (msg.what) {
+                    // track state changes in device
                     case MESSAGE_STATE_CHANGE:
 
                         Utils.log("MESSAGE_STATE_CHANGE: " + msg.arg1);
@@ -437,6 +469,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
 
+                    // If message recv
                     case MESSAGE_READ:
                         final String readMessage = (String) msg.obj;
                         if (readMessage != null) {

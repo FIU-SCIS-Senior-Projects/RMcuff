@@ -25,25 +25,21 @@ public class RegistrationPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_page);
 
+        // load phone data
         objectPreference = (ObjectPreference) this.getApplication();
         objectPreference.createNewComplexFile("data");
         complexPreferences = objectPreference.getComplexPreference();
     }
 
-    /*
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish() ;
-    }
-    */
 
     public void submitForm(View view) {
+        // link text from layout
         EditText yourName = (EditText) findViewById(R.id.yourName);
         EditText yourPhone = (EditText) findViewById(R.id.yourPhone);
         EditText theirName = (EditText) findViewById(R.id.theirName);
         EditText theirPhone = (EditText) findViewById(R.id.theirPhone);
 
+        // set values from input
         String pName = yourName.getText().toString();
         String cgName = theirName.getText().toString();
         String pNum = yourPhone.getText().toString();
@@ -54,6 +50,7 @@ public class RegistrationPage extends AppCompatActivity {
         boolean readyToRegister = true;
 
 
+        // test if valid input
         if (empty(pName)) {
             readyToRegister = false;
             yourName.setError("Please Enter your Name");
@@ -71,9 +68,9 @@ public class RegistrationPage extends AppCompatActivity {
             theirPhone.setError("Please enter a valid Phone Number (10 digits)(No special Characters)");
         }
 
+        // if all inputs are valid
         if (readyToRegister) {
-            // Save Data and exit this page
-            //(String patientID, String primaryCaregiverID, String name,  ReadingList readings, ScheduleList schedule)
+            // create new object, store to phone memory, and continue
             Patient patient = new Patient(pNum, cgNum, pName, cgName, new ReadingList(), new ScheduleList());
             complexPreferences.putObject("patient", patient);
             complexPreferences.commit();
@@ -82,16 +79,20 @@ public class RegistrationPage extends AppCompatActivity {
     }
 
     public void registrationComplete() {
+        // send user to main activity
         Intent mainActivity = new Intent(this, MainActivity.class);
         startActivity(mainActivity);
 
+        // end this activity
         finish() ;
     }
 
+    // check if phone is numeric only and length 10
     public boolean invalid(String phoneNum) {
         return phoneNum.length() != 10 || !TextUtils.isDigitsOnly(phoneNum);
     }
 
+    // check if string is empty
     public boolean empty(String s) {
         return TextUtils.isEmpty(s);
     }

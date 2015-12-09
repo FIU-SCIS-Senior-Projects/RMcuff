@@ -94,72 +94,13 @@ public class CustomHandler extends BroadcastReceiver {
                 complexPreferences.putObject("scheduleList", scheduleList);
                 complexPreferences.commit();
 
-                // Schedule has been saved, now set the alarm
-                /*
-                Calendar cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault()) ;
 
-                cal.setTime(newSchedule.getDate()) ;
-                System.out.println("+++ " + cal.getTime()) ;
-
-                Intent i = new Intent(context, MainActivity.class) ;
-                PendingIntent pendingIntent = PendingIntent.getService(context, 0, i, 0) ;
-
-                AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE) ;
-                am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
-
-
-                System.out.println("Alarm Set") ;
-                System.out.println("********") ;
-                */
-                // Get a handler that can be used to post to the main thread
-
-                //Handler mainHandler = new Handler(context.getMainLooper()) ;
-                //Runnable myRunnable = new Runnable() {
-                //@Override
-                //public void run()
-                //{
-                /*
-                        long startMillis = 0 ;
-                        long endMillis = 0;
-
-                        Calendar beginTime = Calendar.getInstance() ;
-                        beginTime.setTime(s.getDate()) ;
-                        startMillis = beginTime.getTimeInMillis() ;
-
-                        Calendar endTime = Calendar.getInstance();
-                        Date endDate = s.getDate() ;
-                        endDate.setMinutes(endDate.getMinutes() + 5) ;
-                        endTime.setTime(endDate);
-                        endMillis = endTime.getTimeInMillis();
-
-
-                        long calID = 1;
-                        ContentResolver cr = context.getContentResolver();
-                        ContentValues values = new ContentValues();
-                        values.put(Events.DTSTART, startMillis);
-                        values.put(Events.DTEND, endMillis);
-                        values.put(Events.TITLE, "BP Reading");
-                        values.put(Events.DESCRIPTION, "Please open the RMCuff App to take your scheduled reading :)");
-
-                        values.put(Events.CALENDAR_ID, calID);
-
-                        values.put(Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
-                        //values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
-                        Uri uri = cr.insert(Events.CONTENT_URI, values);
-
-                        long eventID = Long.parseLong(uri.getLastPathSegment());
-                        */
-                //Calendar beginTime = Calendar.getInstance();
-                // beginTime.set(2016, 0, 19, 7, 30);
-                //Calendar endTime = Calendar.getInstance();
-                //endTime.set(2016, 0, 19, 8, 30);
-
+                // Save Schedule to calendar event
                 long startMillis = 0;
                 long endMillis = 0;
 
                 Calendar beginTime = Calendar.getInstance();
                 beginTime.setTime(newSchedule.getDate());
-                //startMillis = beginTime.getTimeInMillis() ;
 
                 Calendar endTime = Calendar.getInstance();
                 Date endDate = newSchedule.getDate();
@@ -167,6 +108,7 @@ public class CustomHandler extends BroadcastReceiver {
                 endTime.setTime(endDate);
                 //endMillis = endTime.getTimeInMillis();
 
+                // set up calendar intent, using all the date data received
                 Intent i = new Intent(Intent.ACTION_INSERT)
                         .setData(Events.CONTENT_URI)
                         .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
@@ -175,13 +117,6 @@ public class CustomHandler extends BroadcastReceiver {
                         .putExtra(Events.DESCRIPTION, "Take your blood pressure");
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
-                //Uri uri = cr.insert(CalendarContract.Reminders.CONTENT_URI, values);
-
-                //values.put(CalendarContract.Reminders.MINUTES, 2);
-                //values.put(CalendarContract.Reminders.EVENT_ID, eventID);
-                // } // This is your code
-                //};
-                //mainHandler.post(myRunnable);
             }
         }
     }
