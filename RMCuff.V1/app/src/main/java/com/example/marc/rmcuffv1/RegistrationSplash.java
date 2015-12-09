@@ -17,6 +17,8 @@ public class RegistrationSplash extends AppCompatActivity {
 
     public void register(View view)
     {
+        // When user clicks through, send them to the registration page
+
         Intent registerPage = new Intent(this, RegistrationPage.class);
         startActivity(registerPage);
 

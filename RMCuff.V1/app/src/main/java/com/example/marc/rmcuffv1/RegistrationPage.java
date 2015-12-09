@@ -28,6 +28,7 @@ public class RegistrationPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_page);
 
+        // Get phone data
         objectPreference = (ObjectPreference) this.getApplication();
         objectPreference.createNewComplexFile("data");
         complexPreferences = objectPreference.getComplexPreference();
@@ -35,11 +36,13 @@ public class RegistrationPage extends AppCompatActivity {
 
     public void submitForm(View view)
     {
+        // Get text fields
         EditText yourName = (EditText) findViewById(R.id.yourName) ;
         EditText yourPhone = (EditText) findViewById(R.id.yourPhone) ;
         EditText theirName = (EditText) findViewById(R.id.theirName) ;
         EditText theirPhone = (EditText) findViewById(R.id.theirPhone) ;
 
+        // grab input info
         String cgName = yourName.getText().toString() ;
         String pName = theirName.getText().toString() ;
         String cgNum = yourPhone.getText().toString() ;
@@ -49,6 +52,7 @@ public class RegistrationPage extends AppCompatActivity {
 
         boolean readyToRegister = true ;
 
+        // Check if fields are valid
         if (empty(cgName))
         {
             readyToRegister = false ;
@@ -70,31 +74,35 @@ public class RegistrationPage extends AppCompatActivity {
             yourPhone.setError("Please enter a valid Phone Number (10 digits)(No special Characters)");
         }
 
+        // if valid input
         if(readyToRegister)
         {
-            // Save Data and exit this page
-            //(String patientID, String primaryCaregiverID, String name,  ReadingList readings, ScheduleList schedule, Device device)
-
+            // Set up registered objects and store them to device memory
             MyPatient patient = new MyPatient(pNum, pName,new ReadingList(), new ScheduleList()) ;
             PrimaryCaregiver pcg = new PrimaryCaregiver(cgNum, cgName, patient, new CaregiverList() ) ;
             complexPreferences.putObject("pcg", pcg) ;
             complexPreferences.commit() ;
             registrationComplete() ;
-
         }
     }
 
     public void registrationComplete()
     {
+        // Take user to the main activity
         Intent mainActivity = new Intent(this, MainActivity.class);
         startActivity(mainActivity);
 
+        // Terminate this activity
         finish() ;
     }
+
+    // check if phone is digits only and 10 char length
     public boolean invalid(String phoneNum)
     {
         return phoneNum.length() != 10 || !TextUtils.isDigitsOnly(phoneNum);
     }
+
+    // Check if empty input
     public boolean empty(String s)
     {
         return TextUtils.isEmpty(s);

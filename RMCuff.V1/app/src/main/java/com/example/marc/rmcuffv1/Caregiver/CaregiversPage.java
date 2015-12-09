@@ -35,16 +35,20 @@ public class CaregiversPage extends Activity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_caregivers_page);
 
+        // load phone data
         objectPreference = (ObjectPreference) this.getApplication();
-        //objectPreference.createNewComplexFile("caregivers");
         objectPreference.createNewComplexFile("data");
-
         complexPreferences = objectPreference.getComplexPreference();
+
+        // link the list from layout
         caregiverListView = (ListView) findViewById(R.id.caregiverListView);
 
+        // set up pcg object
         pcg = complexPreferences.getObject("pcg", PrimaryCaregiver.class) ;
 
         registerForContextMenu(caregiverListView);
+
+        // populate the secondary cg list
         populateList();
     }
 
@@ -54,26 +58,37 @@ public class CaregiversPage extends Activity {
 
     private void sendTextMessage() {
 
+        // Send text message log
+
+        // if a user is registered and there are readings available from the patient
         if (pcg != null && pcg.getPatient().getReadings().size() != 0)
         {
 
             String message = "Patient: " + pcg.getPatient().getName() + "\n" ;
 
+            // for each reading the patient has taken
             for (Reading r : pcg.getPatient().getReadings().getReadingList())
             {
+                // add the reading to the message that will be submitted
                 message += r.toString() + "\n" ;
             }
 
+            // Get phone sms manager
             SmsManager msgManager = SmsManager.getDefault();
 
             // NEW
             try {
+                // grab the caregiver list from phone data
                 CaregiverList caregiverResults = complexPreferences.getObject("caregiverList", CaregiverList.class);
 
+                // if the list is not empty
                 if (!caregiverResults.getCaregiverList().isEmpty()) {
+
+                    // for each secondary caregiver
                     for (Caregiver cg : caregiverResults.getCaregiverList()) {
                         if (cg.getNotify()) // if the notify box is checked
                         {
+                            // send them a copy of the text report
                             msgManager.sendTextMessage(cg.getPhoneNum(), null, message, null, null);
                         }
                     }
@@ -134,27 +149,33 @@ public class CaregiversPage extends Activity {
         Caregiver fullObject;
 
         switch(item.getItemId()) {
+            // user selected the delete option
             case R.id.delete:
                 o = caregiverListView.getItemAtPosition(info.position);
                 fullObject = (Caregiver) o;
 
+                // remove the object selected
                 CaregiverList caregiverResults = complexPreferences.getObject("caregiverList", CaregiverList.class) ;
                 caregiverResults.remove(info.position) ;
 
-                //complexPreferences.removeObject(String.valueOf(info.position));
+                // save new list to phone data
                 complexPreferences.putObject("caregiverList", caregiverResults);
                 complexPreferences.commit();
 
                 Log.d(LOG_TAG, "DELETING: " + " " + fullObject.getFirstName());
 
+                // reload the list in UI
                 populateList();
 
                 return true;
+            // User selected the edit option
             case R.id.edit:
                 o = caregiverListView.getItemAtPosition(info.position);
                 fullObject = (Caregiver) o;
 
                 fullObject.setUserID(info.position);
+
+                // send them to the edit page
                 Intent mIntent = new Intent(this, NewCaregiverPage.class);
                 Bundle mBundle = new Bundle();
 
@@ -231,20 +252,4 @@ public class CaregiversPage extends Activity {
         this.finish();
     }
 
-    /*
-    private ArrayList<Caregiver> GetSearchResultsFromPreferences() {
-        ArrayList<Caregiver> results = new ArrayList<>();
-        int count;
-
-        count = complexPreferences.getCount();
-
-        for (int i = 0; i < count; i++) {
-            Caregiver c = complexPreferences.getObject(String.valueOf(i), Caregiver.class);
-            results.add(c);
-        }
-
-        //Log.d(LOG_TAG, results.toString());
-        return results;
-    }
-    */
 }

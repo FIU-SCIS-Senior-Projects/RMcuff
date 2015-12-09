@@ -31,8 +31,6 @@ public class CustomHandler extends BroadcastReceiver
     private ObjectPreference objectPreference;
     private ComplexPreferences complexPreferences;
 
-    //private ObjectPreference readingObjectPreference;
-    //private ComplexPreferences readingComplexPreferences;
     private ReadingList readingList ;
     private Gson GSON = new Gson();
 
@@ -45,15 +43,11 @@ public class CustomHandler extends BroadcastReceiver
         objectPreference.createNewComplexFile("data");
         complexPreferences = objectPreference.getComplexPreference();
 
-        System.out.println("XXX WORKS") ;
-
         if( complexPreferences != null) {
-            System.out.println("XXX2 WORKS2NEW") ;
             readingList = complexPreferences.getObject("readingList", ReadingList.class) ;
         }
 
         Log.d(TAG, "action=" + action);
-        System.out.println("$$$$$$$$$$$$$") ;
 
         // Handle Push Message when opened
         if (action.equals(PBConstants.EVENT_MSG_OPEN)) {
@@ -87,15 +81,13 @@ public class CustomHandler extends BroadcastReceiver
 
             // Handle Push Message when received
         }else if(action.equals(PBConstants.EVENT_MSG_RECEIVE)){
-            System.out.println("@@@@@@@@@@@@@@@2") ;
 
             HashMap<?, ?> PushdataOpen = (HashMap<?, ?>) intent.getExtras().get(PBConstants.EVENT_MSG_RECEIVE);
-            Log.w(TAG, "#######User Received notification with Message: " + PushdataOpen.get("message")) ;
+            Log.w(TAG, "User Received notification with Message: " + PushdataOpen.get("message")) ;
             //System.out.println(PushdataOpen.toString()) ;
 
             if( PushdataOpen != null && PushdataOpen.containsKey("reading"))
             {
-                System.out.println("%%%%%%% " + PushdataOpen.get("reading"));
 
                 Reading newReading = GSON.fromJson((String)PushdataOpen.get("reading"), Reading.class) ;
 
@@ -112,7 +104,6 @@ public class CustomHandler extends BroadcastReceiver
                 // UNCOMMENT THIS ONCE YOU WANT TO START SAVING
                 complexPreferences.putObject("readingList", readingList);
                 complexPreferences.commit();
-                System.out.println("XXX3 WORKS3") ;
             }
         }
     }

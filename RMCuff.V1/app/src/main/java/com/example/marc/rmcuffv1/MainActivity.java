@@ -29,9 +29,9 @@ import com.pushbots.push.Pushbots;
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    //MyPatient patient ;
+
     private PrimaryCaregiver pcg ;
-    private Intent caregiversPage;
+    private Intent caregiversPage ;
 
     private ObjectPreference objectPreference;
     private ComplexPreferences complexPreferences;
@@ -44,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
         this.setContentView(R.layout.activity_main);
         //getSupportActionBar().hide();
 
+        // Set up Pushbots instance for push notification system
         Pushbots.sharedInstance().init(this);
         Pushbots.sharedInstance().setCustomHandler(CustomHandler.class);
 
-        // Get all Object preferences
+        // Create/Get phone data file
         objectPreference =  (ObjectPreference) this.getApplication() ;
         objectPreference.createNewComplexFile("data") ;
-
         complexPreferences = objectPreference.getComplexPreference() ;
 
         CaregiverList caregiverResults = null ;
@@ -58,39 +58,33 @@ public class MainActivity extends AppCompatActivity {
 
         if( complexPreferences != null )
         {
-            //readingComplexPreferences.putObject("readingList", new ReadingList());
-            //readingComplexPreferences.commit() ;
-
-            System.out.println("XXX5 WORKS5") ;
+            // Grab data from phone data
             caregiverResults = complexPreferences.getObject("caregiverList", CaregiverList.class) ;
             readings = complexPreferences.getObject("readingList", ReadingList.class ) ;
             pcg = complexPreferences.getObject("pcg", PrimaryCaregiver.class) ;
         }
 
-        if (pcg == null)
+        if (pcg == null) // If no primary caregiver registered, register the user
             register() ;
         if( readings == null)
             readings = new ReadingList() ;
         if (caregiverResults == null)
             caregiverResults = new CaregiverList() ;
 
-
-        // MyPatient patient = new MyPatient("7864445555", "Luke Skywalkwer", readings, new ScheduleList()) ;
-        // pcg = new PrimaryCaregiver("7863158886", patient, caregiverResults) ;
-
-
-        //Dynamic Load
-
-
+        // If user is registered
         if (pcg != null)
         {
+            // Set the pcg attributes
             pcg.setSecondaryCaregivers(caregiverResults) ;
             pcg.getPatient().setReadings(readings) ;
+
+            // Save pcg to device memory
             complexPreferences.putObject("pcg", pcg) ;
             complexPreferences.commit() ;
 
-
+            // use phone number as unique key for the user on pushbots
             Pushbots.sharedInstance().setAlias(pcg.getPrimaryCaregiverID()) ;
+
             // Update UI
             updateUIFields() ;
         }
@@ -98,28 +92,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestart() {
+    protected void onRestart()
+    {
         super.onRestart();
+        // When app is opened after standby
 
-        System.out.println("+++++ Restart") ;
-
+        // Restore pcg object
         pcg = complexPreferences.getObject("pcg", PrimaryCaregiver.class ) ;
 
+        // If not registered
         if(pcg == null)
             register() ;
 
         // Set pushbots data again
         Pushbots.sharedInstance().setAlias(pcg.getPrimaryCaregiverID()) ;
 
+        // Update UIfields again
         updateUIFields() ;
     }
 
+    // Call to register a user
     private void register() {
-        //Intent registerPage = new Intent(this, RegistrationPage.class);
-        //startActivity(registerPage);
+
+        // First load the registration splash page, this will then lead to the registration page
         Intent registerSplash = new Intent(this, RegistrationSplash.class);
         startActivity(registerSplash);
 
+        // Close this activity
         finish() ;
     }
 
@@ -128,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearAllData() {
+        // clear all data stored on phone, used for testing purposes
+
         CaregiverList caregiverResults = new CaregiverList();
         ReadingList readings = new ReadingList();
 
@@ -141,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
         complexPreferences.commit();
 
         pcg = null;
+
+        // User must now register again
         register();
     }
 
@@ -151,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         TextView patientName = (TextView) findViewById(R.id.patientNameField) ;
         TextView patientPhone = (TextView) findViewById(R.id.patientPhoneField) ;
 
+        // Set up list adapters and lists
         ArrayAdapter<String> readingsAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1);
 
@@ -189,8 +193,6 @@ public class MainActivity extends AppCompatActivity {
         {
             scheduleAdapter.add(schedule.get(i).toString());
         }
-        //scheduleAdapter.add("Time 2") ;
-        //scheduleAdapter.add("Time 3") ;
     }
 
     @Override
@@ -215,56 +217,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void schedulePost()
     {
-
+        // Take user to schedule page
         Intent schedulePage = new Intent(this, NewSchedulePage.class);
         startActivity(schedulePage);
-
-        /*
-        // Get Phone Signal and Wifi Status
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-
-        // If the phone is connected somehow
-        if (networkInfo != null && networkInfo.isConnected())
-        {
-            // fetch data
-            System.out.println("Connected") ;
-            Schedule toSchedule = new Schedule(new Date()) ;
-            String toSend = GSON.toJson(toSchedule, Schedule.class) ;
-
-            Post post = new Post() ;
-            post.execute(pcg.getPatient().getPatientID(), toSend) ;
-        }
-        else
-        {
-            // display error
-            System.out.println("No Connection") ;
-        }
-        */
     }
-
-    /*
-    private ArrayList<Caregiver> GetSearchResultsFromPreferences() {
-        ArrayList<Caregiver> results = new ArrayList<>();
-        int count;
-
-        count = secCaregiverComplexPreferences.getCount();
-
-        for (int i = 0; i < count; i++) {
-            Caregiver c = secCaregiverComplexPreferences.getObject(String.valueOf(i), Caregiver.class);
-            results.add(c);
-        }
-
-        //Log.d(LOG_TAG, results.toString());
-        return results;
-    }
-    */
 
     public void startCaregivers(View view) {
         startCaregivers();
     }
 
     private void startCaregivers() {
+        // takes user to the secondary caregiver list
         caregiversPage = new Intent(this, CaregiversPage.class);
         startActivity(caregiversPage);
     }
@@ -272,11 +235,12 @@ public class MainActivity extends AppCompatActivity {
     public void makeCall(View view) { makePhoneCall(); }
 
     private void makePhoneCall() {
-        System.out.println("##########7") ;
+        // Call shortcut button
 
         //TelephonyManager tm= (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         PackageManager pm = getPackageManager();
 
+        // if the user has no calling functionality, warn them
         if (!pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)){
             //has no Telephony features.
             System.out.println("Can't call") ;
@@ -287,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
             // Can make calls
             try
             {
+                // start call intent using patient phone number
                 Uri number = Uri.parse( "tel:" + pcg.getPatient().getPatientID() ) ;
                 Intent intent = new Intent(Intent.ACTION_CALL, number);
                 startActivity(intent);

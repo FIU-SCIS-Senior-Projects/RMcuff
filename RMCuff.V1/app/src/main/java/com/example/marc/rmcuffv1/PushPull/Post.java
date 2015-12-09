@@ -49,12 +49,11 @@ public class Post extends AsyncTask<String, Void, Void>
 
     public void postReading(String phoneNum, String scheduleData)  throws IOException
     {
-        System.out.println("XXXYYYZZZ: " + scheduleData) ;
         String myurl = "http://www.davidbaez.com/push.php" ;
-        System.out.println("hey") ;
         InputStream is = null;
         DataOutputStream  out = null ;
         HttpURLConnection conn = null ;
+
         // Only display the first 500 characters of the retrieved
         // web page content.
         int len = 500;
@@ -75,7 +74,6 @@ public class Post extends AsyncTask<String, Void, Void>
 
             // For Posting
             String urlParameters = "pushMode=toPatient" + "&" + "phoneNum=" + phoneNum + "&" + "schedule=" + scheduleData;
-            System.out.println("****************** " + urlParameters) ;
 
             out = new DataOutputStream(conn.getOutputStream());
             out.writeBytes(urlParameters);

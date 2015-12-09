@@ -13,11 +13,11 @@ public class ComplexPreferences {
 
     private static final String LOG_TAG = ComplexPreferences.class.getSimpleName();
     private static ComplexPreferences complexPreferences;
-    //private final Context context;
+
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private Gson GSON = new Gson();
-    //Type T = new TypeToken<Object>(){}.getType();
+
 
     private ComplexPreferences(Context context, String namePreferences, int mode) {
         if (namePreferences == null || namePreferences.equals("")) {
@@ -26,7 +26,7 @@ public class ComplexPreferences {
         preferences = context.getSharedPreferences(namePreferences, mode);
         editor = preferences.edit();
 
-        //Log.d(LOG_TAG, "LOADED PREFS FROM: " + namePreferences);
+        Log.d(LOG_TAG, "LOADED PREFS FROM: " + namePreferences);
     }
 
     public static ComplexPreferences getComplexPreferences(Context context, String namePreferences, int mode) {
@@ -78,31 +78,10 @@ public class ComplexPreferences {
             throw new IllegalArgumentException("Key is empty or null");
         }
         editor.remove(key);
-        //recalculateCaregivers(Integer.parseInt(key));
-        //setCount(getCount() - 1);
+
         commit();
         Log.d(LOG_TAG, "REMOVING: " + key);
     }
-/*
-    private void recalculateCaregivers(int position) {
-        int count = getCount();
-
-        for (int i = position + 1; i < count; i++) {
-            Caregiver c = getObject(String.valueOf(i), Caregiver.class);
-            c.setUserID(position);
-            putObject(String.valueOf(position), c);
-        }
-    }
-
-
-    public void setCount(int value) {
-        editor.putInt("userCount", value).commit();
-    }
-
-    public int getCount() {
-        return preferences.getInt("userCount", 0);
-    }
-    */
 
     public void wipePreferences(Context context, String fileName) {
         SharedPreferences wipePreferences = context.getSharedPreferences(fileName, 0);

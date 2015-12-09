@@ -33,14 +33,15 @@ public class NewSchedulePage  extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_schedule_page);
 
-
+        // load phone data
         objectPreference = (ObjectPreference) this.getApplication();
         objectPreference.createNewComplexFile("data") ;
         complexPreferences = objectPreference.getComplexPreference() ;
 
+        // if phone data available
         if (complexPreferences != null)
         {
-            System.out.println("$$$$$$*********\n");
+            // set up pcg object from device memory
             pcg = complexPreferences.getObject("pcg", PrimaryCaregiver.class) ;
         }
 
@@ -48,6 +49,8 @@ public class NewSchedulePage  extends Activity {
 
     public void sendSchedule(View view)
     {
+        // Grab date and time picked and check if valid
+
         DatePicker dp = (DatePicker) findViewById(R.id.datePicker) ;
         TimePicker tp = (TimePicker) findViewById(R.id.timePicker) ;
 
@@ -74,6 +77,7 @@ public class NewSchedulePage  extends Activity {
             Schedule toSchedule = new Schedule(date) ;
             String toSend = GSON.toJson(toSchedule, Schedule.class) ;
 
+            // Send the scheduled date to patient via push notification
             Post post = new Post() ;
             post.execute(pcg.getPatient().getPatientID(), toSend) ;
 
