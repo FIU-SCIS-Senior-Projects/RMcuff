@@ -26,11 +26,11 @@ In the current system, a primary caregiver takes the responsibility of tracking 
 The new system has one primary purpose, and that is accessibility for elderly, less tech savvy adults. The big difference, is that this new system gives the primary caregiver the power to schedule and track readings to motivate the patient remotely via their cell phone. It is a minimized application that provides blood pressure monitoring and only features directly related to that, thus avoiding overcomplexity. Less functionality also means a clean user interface, so users could easily and quickly navigate the application with little to no instruction. The new system will send the patient’s primary caregiver blood pressure reports via a push notification to a separate primary caregiver application. The primary caregiver can then send secondary caregivers text message logs of the patient’s blood pressure. Text messages make the transfer of information immediate and more likely to be read quickly. No need for secondary caregivers to download an app, and no email reports that rarely get read, just simplicity. The point is to do one thing very well. 
 
 # Code Directory
-RMCuff/
-  - Server-Code/
+* RMCuff/
+  * Server-Code/
   	* PushBots.class.php 	-- Push bot API code
   	* push.php -- Push bot API push methods
-  - RMCuff.V1/
+  * RMCuff.V1/
     * app/
       * src/
         * main/
@@ -61,33 +61,33 @@ RMCuff/
 	          - NewSchedulePage.java 	-- Activity for setting new schedule
 	          - Schedule.java 	-- Schedule class
 	          - ScheduleList.java  -- Schedule list for displaying schedules to app
- - RMCuff.V1_Patient/
+ * RMCuff.V1_Patient/
    * app/
        * src/
          * main/
            * rmcuffv1/
               - MainActivity.java 	-- Main activity page
-	          - RegistrationPage.java 	-- Registration activity
+              - RegistrationPage.java 	-- Registration activity
               - RegistrationSplash.java -- Splash screen
               - Settings.Java  -- Opens a settings page for the patient (NOT FUNCTIONING)
-              - BluetoothTools/
+              * BluetoothTools/
               	- BluetoothUtils.java 	-- Contains utilities for bluetooth device identification
               	- Const.java 	-- Containts bluetooth connection constants
               	- DeviceConnector.java 	-- Main handler for the bluetooth communication
               	- DeviceData.java 	-- Device data class
               	- Utils.java -- More utils for bluetooth communication
-              - Preferences/
+              * Preferences/
                 - ComplexPreferences.java  -- Containts methods for manipulating our serialized preferences
   	            - ObjectPreference.java  --  GSON method of serializing classes and objects
-              - PushPull/
+              * PushPull/
                 - CustomHandler.java 	-- Handler for managing pushbot API
                 - Post.java  -- Part of the pushbot API
-              - Settings/
+              * Settings/
                 - Patient/
                 - MyPatient.java  --  Patient class
-              - Reading/
+              * Reading/
                 - Reading.java  -- Reading class
                 - ReadingList.java -- Reading list for displaying readings to app
-              - Schedule/
+              * Schedule/
   	            - Schedule.java 	-- Schedule class
   	            - ScheduleList.java  -- Schedule list for displaying schedules to app
