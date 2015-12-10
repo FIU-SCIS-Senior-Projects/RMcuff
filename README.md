@@ -4,7 +4,12 @@ RMcuff is a new system for joint effort tracking of blood pressure between a pat
 
 # Installation:
 DavidBaez.com/RMCaregiver.apk for the caregiver application.
+
 DavidBaez.com/RMPatient.apk for the patient application.
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=2Y7lIfIoHTM
+" target="_blank"><img src="http://img.youtube.com/vi/2Y7lIfIoHTM/0.jpg" 
+alt="Install" width="240" height="180" border="10" /></a>
 
 Both applications need to be downloaded from the android device that it will be installed on as the app is currently not in the appstore.
 Once both applications are downloaded you will have the ability to install the respective application.
@@ -22,67 +27,67 @@ The new system has one primary purpose, and that is accessibility for elderly, l
 
 # Code Directory
 RMCuff/
-  Server-Code/
-  	PushBots.class.php 	-- Push bot API code
-  	push.php -- Push bot API push methods
-  RMCuff.V1/
-    app/
-      src/
-        main/
-          rmcuffv1/
-            MainActivity.java 	-- Main activity page
-	          RegistrationPage.java 	-- Registration activity
-            RegistrationSplash.java -- Splash screen
-            Caregiver/  -- Contains information regarding the caregiver class structure
-              Caregiver.java 	-- Caregiver class
-	            CaregiverList.java 	-- Caregiver list class
-	            CaregiversPage.java 	-- Activity to add, delete, modify caregivers
-	            CustomArrayAdapter.java 	-- Array adapter for displaying caregivers
-	            NewCaregiverPage.java 	-- Activity for registering new secondary caregiver
-	            PrimaryCaregiver.java -- Primary caregiver class
-            Preferences/
-              ComplexPreferences.java  -- Containts methods for manipulating our serialized preferences
-	            ObjectPreference.java  --  GSON method of serializing classes and objects
-            PushPull/
-              CustomHandler.java 	-- Handler for managing pushbot API
-              Post.java  -- Part of the pushbot API
-            Settings/
-              Patient/
-                MyPatient.java  --  Patient class
-              Reading/
-                Reading.java  -- Reading class
-                ReadingList.java -- Reading list for displaying readings to app
-              Schedule/
-	              NewSchedulePage.java 	-- Activity for setting new schedule
-	              Schedule.java 	-- Schedule class
-	              ScheduleList.java  -- Schedule list for displaying schedules to app
-  RMCuff.V1_Patient/
-    app/
-        src/
-          main/
-            rmcuffv1/
-              MainActivity.java 	-- Main activity page
-	            RegistrationPage.java 	-- Registration activity
-              RegistrationSplash.java -- Splash screen
-              BluetoothTools/
-              	BluetoothUtils.java 	-- Contains utilities for bluetooth device identification
-              	Const.java 	-- Containts bluetooth connection constants
-              	DeviceConnector.java 	-- Main handler for the bluetooth communication
-              	DeviceData.java 	-- Device data class
-              	Utils.java -- More utils for bluetooth communication
-              Preferences/
-                ComplexPreferences.java  -- Containts methods for manipulating our serialized preferences
-  	            ObjectPreference.java  --  GSON method of serializing classes and objects
-              PushPull/
-                CustomHandler.java 	-- Handler for managing pushbot API
-                Post.java  -- Part of the pushbot API
-              Settings/
-                Patient/
-                  MyPatient.java  --  Patient class
-                Reading/
-                  Reading.java  -- Reading class
-                  ReadingList.java -- Reading list for displaying readings to app
-                Schedule/
-  	              Schedule.java 	-- Schedule class
-  	              ScheduleList.java  -- Schedule list for displaying schedules to app
-                Settings.Java  -- Opens a settings page for the patient (NOT FUNCTIONING)
+  - Server-Code/
+  	* PushBots.class.php 	-- Push bot API code
+  	* push.php -- Push bot API push methods
+  - RMCuff.V1/
+    * app/
+      * src/
+        * main/
+          * rmcuffv1/
+            - MainActivity.java 	-- Main activity page
+	        - RegistrationPage.java 	-- Registration activity
+            - RegistrationSplash.java -- Splash screen
+            * Caregiver/  -- Contains information regarding the caregiver class structure
+              - Caregiver.java 	-- Caregiver class
+	          - CaregiverList.java 	-- Caregiver list class
+	          - CaregiversPage.java 	-- Activity to add, delete, modify caregivers
+	          - CustomArrayAdapter.java 	-- Array adapter for displaying caregivers
+	          - NewCaregiverPage.java 	-- Activity for registering new secondary caregiver
+	          - PrimaryCaregiver.java -- Primary caregiver class
+            * Preferences/
+              - ComplexPreferences.java  -- Containts methods for manipulating our serialized preferences
+	          - ObjectPreference.java  --  GSON method of serializing classes and objects
+            * PushPull/
+              - CustomHandler.java 	-- Handler for managing pushbot API
+              - Post.java  -- Part of the pushbot API
+            * Settings/
+              - Patient/
+              - MyPatient.java  --  Patient class
+            * Reading/
+              - Reading.java  -- Reading class
+              - ReadingList.java -- Reading list for displaying readings to app
+            * Schedule/
+	          - NewSchedulePage.java 	-- Activity for setting new schedule
+	          - Schedule.java 	-- Schedule class
+	          - ScheduleList.java  -- Schedule list for displaying schedules to app
+ - RMCuff.V1_Patient/
+   * app/
+       * src/
+         * main/
+           * rmcuffv1/
+              - MainActivity.java 	-- Main activity page
+	          - RegistrationPage.java 	-- Registration activity
+              - RegistrationSplash.java -- Splash screen
+              - Settings.Java  -- Opens a settings page for the patient (NOT FUNCTIONING)
+              - BluetoothTools/
+              	- BluetoothUtils.java 	-- Contains utilities for bluetooth device identification
+              	- Const.java 	-- Containts bluetooth connection constants
+              	- DeviceConnector.java 	-- Main handler for the bluetooth communication
+              	- DeviceData.java 	-- Device data class
+              	- Utils.java -- More utils for bluetooth communication
+              - Preferences/
+                - ComplexPreferences.java  -- Containts methods for manipulating our serialized preferences
+  	            - ObjectPreference.java  --  GSON method of serializing classes and objects
+              - PushPull/
+                - CustomHandler.java 	-- Handler for managing pushbot API
+                - Post.java  -- Part of the pushbot API
+              - Settings/
+                - Patient/
+                - MyPatient.java  --  Patient class
+              - Reading/
+                - Reading.java  -- Reading class
+                - ReadingList.java -- Reading list for displaying readings to app
+              - Schedule/
+  	            - Schedule.java 	-- Schedule class
+  	            - ScheduleList.java  -- Schedule list for displaying schedules to app
