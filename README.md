@@ -26,6 +26,7 @@ In the current system, a primary caregiver takes the responsibility of tracking 
 The new system has one primary purpose, and that is accessibility for elderly, less tech savvy adults. The big difference, is that this new system gives the primary caregiver the power to schedule and track readings to motivate the patient remotely via their cell phone. It is a minimized application that provides blood pressure monitoring and only features directly related to that, thus avoiding overcomplexity. Less functionality also means a clean user interface, so users could easily and quickly navigate the application with little to no instruction. The new system will send the patient’s primary caregiver blood pressure reports via a push notification to a separate primary caregiver application. The primary caregiver can then send secondary caregivers text message logs of the patient’s blood pressure. Text messages make the transfer of information immediate and more likely to be read quickly. No need for secondary caregivers to download an app, and no email reports that rarely get read, just simplicity. The point is to do one thing very well. 
 
 # Code Directory
+The "RMCuff.V1" directory contains the code for the RMCuff Caregiver application, and the "RMCuff.V1_Patient" Directory contains the code for the RMCuff Patient Application. All the server code is in the directory "Server-Code".
 * RMCuff/
   * Server-Code/
   	* PushBots.class.php 	-- Push bot API code
